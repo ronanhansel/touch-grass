@@ -10,75 +10,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final CardSwiperController controller = CardSwiperController();
-
-  List<Container> cards = [
-    Container(
-      alignment: Alignment.center,
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: const Color.fromRGBO(238, 240, 227, 100),
-            ),
-            color:
-                Colors.yellow[100], //Theme.of(context).colorScheme.background,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(.10),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        height: 555,
-        width: 450,
-      ),
-    ),
-    Container(
-      alignment: Alignment.center,
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: const Color.fromRGBO(238, 240, 227, 100),
-            ),
-            color: Colors.blue[100], //Theme.of(context).colorScheme.background,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(.10),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        height: 555,
-        width: 450,
-      ),
-    ),
-    Container(
-      alignment: Alignment.center,
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: const Color.fromRGBO(238, 240, 227, 100),
-            ),
-            color:
-                Colors.purple[100], //Theme.of(context).colorScheme.background,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(.10),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        height: 555,
-        width: 450,
-      ),
-    ),
-  ];
-
+  List<Text> cards = [Text('hiii'), Text('hiiiiii')];
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -88,8 +20,7 @@ class _HomeState extends State<Home> {
       body: Flexible(
         child: CardSwiper(
           cardsCount: cards.length,
-          cardBuilder: (context, index, percentThresholdX, percentThresholdY) =>
-              cards[index],
+          cardBuilder: cardBuilder,
           controller: controller,
           onSwipe: _onSwipe,
           allowedSwipeDirection: AllowedSwipeDirection.only(
@@ -99,6 +30,30 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+}
+
+Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
+  return Container(
+    alignment: Alignment.center,
+    child: Container(
+      decoration: BoxDecoration(
+          border: Border.all(
+            color: const Color.fromRGBO(238, 240, 227, 100),
+          ),
+          color: Colors.yellow[100], //Theme.of(context).colorScheme.background,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.10),
+              spreadRadius: 0,
+              blurRadius: 3,
+              offset: Offset(1, 3), // changes position of shadow
+            ),
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      height: MediaQuery.of(context).size.height * 0.65,
+      width: MediaQuery.of(context).size.width * 0.95,
+    ),
+  );
 }
 
 bool _onSwipe(

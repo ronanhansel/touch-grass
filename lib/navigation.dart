@@ -32,7 +32,7 @@ class _HomePageState extends State<Navigation> {
             color: Theme.of(context).colorScheme.onBackground,
             boxShadow: [
               BoxShadow(
-                blurRadius: 20,
+                blurRadius: 2,
                 color: Colors.black.withOpacity(.1),
               )
             ],
@@ -42,15 +42,14 @@ class _HomePageState extends State<Navigation> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
               child: GNav(
-                rippleColor: const Color.fromRGBO(133, 166, 116, 100),
-                hoverColor: const Color.fromRGBO(133, 166, 116, 65),
+                hoverColor: Color.fromARGB(190, 199, 238, 179),
                 gap: 8,
                 activeColor: Colors.black,
                 iconSize: 24,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 duration: const Duration(milliseconds: 400),
-                tabBackgroundColor: const Color.fromRGBO(196, 255, 164, 100)!,
+                tabBackgroundColor: Color.fromARGB(255, 112, 198, 135),
                 color: Theme.of(context).colorScheme.onSecondary,
                 tabs: const [
                   GButton(
