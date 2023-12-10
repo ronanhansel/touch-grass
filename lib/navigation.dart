@@ -29,7 +29,7 @@ class _HomePageState extends State<Navigation> {
       ),
       bottomNavigationBar: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onBackground,
             boxShadow: [
               BoxShadow(
                 blurRadius: 20,
@@ -51,18 +51,21 @@ class _HomePageState extends State<Navigation> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 duration: const Duration(milliseconds: 400),
                 tabBackgroundColor: const Color.fromRGBO(196, 255, 164, 100)!,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.onSecondary,
                 tabs: const [
                   GButton(
                     icon: LineIcons.home,
+                    iconSize: 30.0,
                     text: 'Home',
                   ),
                   GButton(
                     icon: LineIcons.users,
+                    iconSize: 30.0,
                     text: 'Community',
                   ),
                   GButton(
                     icon: LineIcons.user,
+                    iconSize: 30.0,
                     text: 'Profile',
                   ),
                 ],

@@ -8,7 +8,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: Navigation());
+    return MaterialApp(
+        theme: ThemeData(
+            colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: Color.fromRGBO(238, 240, 227, 1),
+          onPrimary: Color.fromRGBO(238, 240, 227, 1),
+          secondary: Color.fromRGBO(241, 243, 230, 1),
+          onSecondary: Color.fromRGBO(153, 153, 153, 1),
+          error: Color.fromRGBO(238, 240, 227, 1),
+          onError: Color.fromRGBO(238, 240, 227, 1),
+          background: Color.fromRGBO(250, 251, 239, 1),
+          onBackground: Color.fromRGBO(39, 39, 39, 1),
+          surface: Color.fromRGBO(238, 240, 227, 1),
+          onSurface: Color.fromRGBO(238, 240, 227, 1),
+        )),
+        debugShowCheckedModeBanner: false,
+        home: const Navigation());
   }
 }
