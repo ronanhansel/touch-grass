@@ -49,7 +49,7 @@ class _HomePageState extends State<Navigation> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 duration: const Duration(milliseconds: 400),
-                tabBackgroundColor: Color.fromARGB(255, 112, 198, 135),
+                tabBackgroundColor: Color.fromARGB(255, 181, 232, 131),
                 color: Theme.of(context).colorScheme.onSecondary,
                 tabs: const [
                   GButton(
