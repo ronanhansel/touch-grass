@@ -42,14 +42,14 @@ class _HomePageState extends State<Navigation> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
               child: GNav(
-                hoverColor: Color.fromARGB(190, 199, 238, 179),
+                hoverColor: Theme.of(context).colorScheme.onPrimary,
                 gap: 8,
                 activeColor: Colors.black,
                 iconSize: 24,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 duration: const Duration(milliseconds: 400),
-                tabBackgroundColor: Color.fromARGB(255, 181, 232, 131),
+                tabBackgroundColor: Theme.of(context).colorScheme.primary,
                 color: Theme.of(context).colorScheme.onSecondary,
                 tabs: const [
                   GButton(
@@ -58,12 +58,12 @@ class _HomePageState extends State<Navigation> {
                     text: 'Home',
                   ),
                   GButton(
-                    icon: LineIcons.users,
+                    icon: LineIcons.globe,
                     iconSize: 30.0,
                     text: 'Community',
                   ),
                   GButton(
-                    icon: LineIcons.user,
+                    icon: LineIcons.userCircle,
                     iconSize: 30.0,
                     text: 'Profile',
                   ),
