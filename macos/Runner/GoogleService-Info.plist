@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>946035220692-mmj98r5mimo0c2vherjfq3jhig1riq37.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.946035220692-mmj98r5mimo0c2vherjfq3jhig1riq37</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCX_ngPp7gTfVwOwThpIg01a1Eetitg-l4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>946035220692</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.gdscSolution.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>touch-grass-3ab53</string>
+	<key>STORAGE_BUCKET</key>
+	<string>touch-grass-3ab53.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:946035220692:ios:d5dd90ef78f3cffc025b41</string>
+</dict>
+</plist>

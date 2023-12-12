@@ -19,15 +19,34 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: CardSwiper(
-        cardsCount: cards.length,
-        cardBuilder: cardBuilder,
-        controller: controller,
-        onSwipe: _onSwipe,
-        allowedSwipeDirection: AllowedSwipeDirection.only(
-            up: false, down: false, left: true, right: true),
-        numberOfCardsDisplayed: 2,
+      body: Stack(
+        children: [
+          CardSwiper(
+            cardsCount: cards.length,
+            cardBuilder: cardBuilder,
+            controller: controller,
+            onSwipe: _onSwipe,
+            allowedSwipeDirection: AllowedSwipeDirection.only(
+                up: false, down: false, left: true, right: true),
+            numberOfCardsDisplayed: 2,
+          ),
+          Positioned(
+            top: height * 0.025,
+            left: width * 0.025,
+            child: Container(
+              child: Text(
+                'AQI',
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[900]),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
