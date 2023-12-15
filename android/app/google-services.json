@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "946035220692",
+    "firebase_url": "https://touch-grass-3ab53-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "touch-grass-3ab53",
     "storage_bucket": "touch-grass-3ab53.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "946035220692-bpfon1rcmd8pcs5uj1qfbifg4lmp6oct.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "946035220692-cfis9fiivauaotdr3uts460lcdsfn97u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.testing.gdscSolution"
+              }
             }
           ]
         }

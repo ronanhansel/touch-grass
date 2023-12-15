@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '946035220692',
     projectId: 'touch-grass-3ab53',
     authDomain: 'touch-grass-3ab53.firebaseapp.com',
+    databaseURL: 'https://touch-grass-3ab53-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'touch-grass-3ab53.appspot.com',
     measurementId: 'G-EZCBEDY996',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:946035220692:android:58f2b5e91d6f71f3025b41',
     messagingSenderId: '946035220692',
     projectId: 'touch-grass-3ab53',
+    databaseURL: 'https://touch-grass-3ab53-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'touch-grass-3ab53.appspot.com',
   );
 
@@ -66,6 +68,7 @@ class DefaultFirebaseOptions {
     appId: '1:946035220692:ios:5111521000c92d3d025b41',
     messagingSenderId: '946035220692',
     projectId: 'touch-grass-3ab53',
+    databaseURL: 'https://touch-grass-3ab53-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'touch-grass-3ab53.appspot.com',
     iosClientId: '946035220692-cfis9fiivauaotdr3uts460lcdsfn97u.apps.googleusercontent.com',
     iosBundleId: 'com.testing.gdscSolution',
@@ -76,6 +79,7 @@ class DefaultFirebaseOptions {
     appId: '1:946035220692:ios:d5dd90ef78f3cffc025b41',
     messagingSenderId: '946035220692',
     projectId: 'touch-grass-3ab53',
+    databaseURL: 'https://touch-grass-3ab53-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'touch-grass-3ab53.appspot.com',
     iosClientId: '946035220692-mmj98r5mimo0c2vherjfq3jhig1riq37.apps.googleusercontent.com',
     iosBundleId: 'com.example.gdscSolution.RunnerTests',
