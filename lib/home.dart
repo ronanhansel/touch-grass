@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -22,32 +23,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Stack(
-        children: [
-          CardSwiper(
-            cardsCount: cards.length,
-            cardBuilder: cardBuilder,
-            controller: controller,
-            onSwipe: _onSwipe,
-            allowedSwipeDirection: AllowedSwipeDirection.only(
-                up: false, down: false, left: true, right: true),
-            numberOfCardsDisplayed: 2,
-          ),
-          Positioned(
-            top: height * 0.025,
-            left: width * 0.025,
-            child: Container(
-              child: Text(
-                'AQI',
-                style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[900]),
-              ),
-            ),
-          ),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        body: CardSwiper(
+          cardsCount: cards.length,
+          cardBuilder: cardBuilder,
+          controller: controller,
+          onSwipe: _onSwipe,
+          allowedSwipeDirection: AllowedSwipeDirection.only(
+              up: false, down: true, left: true, right: true),
+          numberOfCardsDisplayed: 2,
+        ),
       ),
     );
   }
@@ -55,11 +41,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
 Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
   double opacity = normaliser(percentThresholdX, 1000, -1000);
+  double y_delta = normaliser(percentThresholdY, 1000, -1000);
   double width = MediaQuery.of(context).size.width;
   double height = MediaQuery.of(context).size.height;
-  double cardHeight = height * 0.60;
-  double cardWidth = width * 0.95;
-  // debugPrint('$percentThresholdX');
+  double card_height = height * 0.60;
+  double card_width = width * 0.95;
   return Stack(
     children: [
       Positioned(
@@ -216,6 +202,10 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
     ],
   );
 }
+
+// void movedown(Context context, delta) {
+//   setState();
+// }
 
 double convertR(bool right, current) {
   if (right) {

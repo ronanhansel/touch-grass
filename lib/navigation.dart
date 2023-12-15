@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gdsc_solution/community.dart';
 import 'package:gdsc_solution/home.dart';
 import 'package:gdsc_solution/profile.dart';
+import 'package:gdsc_solution/splash_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -14,6 +16,7 @@ class Navigation extends StatefulWidget {
 
 class _HomePageState extends State<Navigation> {
   int _selectedIndex = 0;
+  bool show = true;
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
     Community(),
@@ -21,60 +24,74 @@ class _HomePageState extends State<Navigation> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.onBackground,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 2,
-                color: Colors.black.withOpacity(.1),
-              )
-            ],
+    Future.delayed(const Duration(milliseconds: 4310), () {
+      setState(() {
+        show = false;
+      });
+    });
+    return Stack(
+      children: [
+        Scaffold(
+          body: Center(
+            child: _widgetOptions.elementAt(_selectedIndex),
           ),
-          child: SafeArea(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-              child: GNav(
-                hoverColor: Theme.of(context).colorScheme.onPrimary,
-                gap: 8,
-                activeColor: Colors.black,
-                iconSize: 24,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                duration: const Duration(milliseconds: 400),
-                tabBackgroundColor: Theme.of(context).colorScheme.primary,
-                color: Theme.of(context).colorScheme.onSecondary,
-                tabs: const [
-                  GButton(
-                    icon: LineIcons.home,
-                    iconSize: 30.0,
-                    text: 'Home',
-                  ),
-                  GButton(
-                    icon: LineIcons.globe,
-                    iconSize: 30.0,
-                    text: 'Community',
-                  ),
-                  GButton(
-                    icon: LineIcons.userCircle,
-                    iconSize: 30.0,
-                    text: 'Profile',
-                  ),
+          bottomNavigationBar: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.onBackground,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 2,
+                    color: Colors.black.withOpacity(.1),
+                  )
                 ],
-                selectedIndex: _selectedIndex,
-                onTabChange: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
               ),
-            ),
-          )),
+              child: SafeArea(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                  child: GNav(
+                    hoverColor: Theme.of(context).colorScheme.onPrimary,
+                    gap: 8,
+                    activeColor: Colors.black,
+                    iconSize: 24,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 12),
+                    duration: const Duration(milliseconds: 400),
+                    tabBackgroundColor: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.onSecondary,
+                    tabs: const [
+                      GButton(
+                        icon: LineIcons.home,
+                        iconSize: 30.0,
+                        text: 'Home',
+                      ),
+                      GButton(
+                        icon: LineIcons.globe,
+                        iconSize: 30.0,
+                        text: 'Community',
+                      ),
+                      GButton(
+                        icon: LineIcons.userCircle,
+                        iconSize: 30.0,
+                        text: 'Profile',
+                      ),
+                    ],
+                    selectedIndex: _selectedIndex,
+                    onTabChange: (index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                  ),
+                ),
+              )),
+        ),
+        show
+            ? const SplashScreen()
+                .animate()
+                .fadeOut(delay: 4000.ms, duration: 300.ms, curve: Curves.easeIn)
+            : Container()
+      ],
     );
   }
 }
