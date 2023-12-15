@@ -57,8 +57,8 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
             // This is the image container
             Container(
               // alignment: Alignment.center,
-              height: cardHeight,
-              width: cardWidth,
+              height: card_height,
+              width: card_width,
               decoration: BoxDecoration(
                   image: const DecorationImage(
                       image: NetworkImage(
@@ -73,8 +73,8 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
             // This is gradient container
             Container(
               // alignment: Alignment.center,
-              height: cardHeight,
-              width: cardWidth,
+              height: card_height,
+              width: card_width,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
@@ -98,8 +98,8 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
             // This is the text container
             Container(
               // alignment: Alignment.center,
-              height: cardHeight,
-              width: cardWidth,
+              height: card_height,
+              width: card_width,
               decoration: const BoxDecoration(
                   //Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -138,8 +138,8 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
               duration: Duration.zero,
               child: Container(
                 alignment: Alignment.center,
-                height: cardHeight,
-                width: cardWidth,
+                height: card_height,
+                width: card_width,
                 decoration: BoxDecoration(
                     color: Theme.of(context)
                         .colorScheme
@@ -171,8 +171,8 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
                   duration: Duration.zero,
                   child: Container(
                     alignment: Alignment.center,
-                    height: cardHeight,
-                    width: cardWidth,
+                    height: card_height,
+                    width: card_width,
                     decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color.fromRGBO(238, 240, 227, 100),
