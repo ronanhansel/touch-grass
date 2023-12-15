@@ -1,17 +1,23 @@
-import 'dart:io';
+import 'dart:convert';
 
-Map<String, String> tasks = {
-  'task_id': '0000001',
-  'name_task': 'Task 1',
-  'task_type': 'evergy',
-  'task_xp': '10',
-  'badge': 'no'
-};
+import 'package:http/http.dart' as http;
 
-Map<String, String> get_result() {
-  return {'hello': 'hello'};
+Future<Map> fetchAlbum() async {
+  final response = await http
+      .get(Uri.parse('http://api.openweathermap.org/data/2.5/air_pollution?lat=21.006254713797045&lon=105.84309604779587&appid=ff677b8db486de02b5effc8891a86899'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    final Map parsed = jsonDecode(response.body);
+    return parsed;
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
 }
 
-void main() {
-  print(get_result());
+void main() async {
+  print(await fetchAlbum());
 }
