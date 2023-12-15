@@ -12,13 +12,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   final CardSwiperController controller = CardSwiperController();
-  List<Text> cards = [Text('hiii'), Text('hiiiiii')];
+  List<Text> cards = [const Text('hiii'), const Text('hiiiiii')];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -45,7 +46,6 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
   double height = MediaQuery.of(context).size.height;
   double card_height = height * 0.60;
   double card_width = width * 0.95;
-
   return Stack(
     children: [
       Positioned(
@@ -57,8 +57,8 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
             // This is the image container
             Container(
               // alignment: Alignment.center,
-              height: card_height,
-              width: card_width,
+              height: cardHeight,
+              width: cardWidth,
               decoration: BoxDecoration(
                   image: const DecorationImage(
                       image: NetworkImage(
@@ -73,8 +73,8 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
             // This is gradient container
             Container(
               // alignment: Alignment.center,
-              height: card_height,
-              width: card_width,
+              height: cardHeight,
+              width: cardWidth,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
@@ -98,8 +98,8 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
             // This is the text container
             Container(
               // alignment: Alignment.center,
-              height: card_height,
-              width: card_width,
+              height: cardHeight,
+              width: cardWidth,
               decoration: const BoxDecoration(
                   //Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -138,8 +138,8 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
               duration: Duration.zero,
               child: Container(
                 alignment: Alignment.center,
-                height: card_height,
-                width: card_width,
+                height: cardHeight,
+                width: cardWidth,
                 decoration: BoxDecoration(
                     color: Theme.of(context)
                         .colorScheme
@@ -171,8 +171,8 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
                   duration: Duration.zero,
                   child: Container(
                     alignment: Alignment.center,
-                    height: card_height,
-                    width: card_width,
+                    height: cardHeight,
+                    width: cardWidth,
                     decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color.fromRGBO(238, 240, 227, 100),
@@ -185,10 +185,10 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
                             color: Colors.black.withOpacity(.10),
                             spreadRadius: 0,
                             blurRadius: 3,
-                            offset: Offset(1, 3), // changes position of shadow
+                            offset: const Offset(1, 3), // changes position of shadow
                           ),
                         ],
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                        borderRadius: const BorderRadius.all(Radius.circular(20))),
                     child: const Icon(
                       LineIcons.heartBroken,
                       color: Colors.white,

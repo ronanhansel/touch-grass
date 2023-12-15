@@ -44,6 +44,7 @@ dependencies:
   flutter_animate: ^4.3.0
   http: ^1.1.2
   flutter_swipe_detector: ^2.0.0
+  cloud_firestore: ^4.13.6
 
 dev_dependencies:
   flutter_test:
