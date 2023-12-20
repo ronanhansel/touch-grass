@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'signup.dart';
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -18,25 +20,25 @@ class _LoginPageState extends State<LoginPage> {
       return const SignupPage();
     }));
   }
-  // final TextEditingController _emailController = TextEditingController();
-  // final TextEditingController _passwordController = TextEditingController();
-  // int _success = 1;
-  // String _userEmail = "";
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  int _success = 1;
+  String _userEmail = "";
 
-  // void _singIn() async {
-  //   final User user = (await _auth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)).user;
+  void _singIn() async {
+    final User? user = (await _auth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)).user;
 
-  //   if(user != null) {
-  //     setState(() {
-  //       _success = 2;
-  //       _userEmail = user.email;
-  //     });
-  //   } else {
-  //     setState(() {
-  //       _success = 3;
-  //     });
-  //   }
-  // }
+    if(user != null) {
+      setState(() {
+        _success = 2;
+        _userEmail = user.email!;
+      });
+    } else {
+      setState(() {
+        _success = 3;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +65,10 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.only(top: 35, left: 20, right: 30),
             child: Column(
               children: <Widget>[
-                const TextField(
-                  // controller: _emailController,
-                  decoration: InputDecoration(
+                TextField(
+                  style: const TextStyle(color: Colors.black),
+                  controller: _emailController,
+                  decoration: const InputDecoration(
                     labelText: 'EMAIL',
                     labelStyle: TextStyle(
                       fontFamily: 'Montserrat',
@@ -78,9 +81,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20,),
-                const TextField(
-                  // controller: _passwordController,
-                  decoration: InputDecoration(
+                TextField(
+                  style: const TextStyle(color: Colors.black),
+                  controller: _passwordController,
+                  decoration: const InputDecoration(
                       labelText: 'PASSWORD',
                       labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -112,15 +116,15 @@ class _LoginPageState extends State<LoginPage> {
                 Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  // child: Text(
-                  //   _success == 1
-                  //       ? ''
-                  //       : (
-                  //   _success == 2
-                  //       ? 'Successfully signed in ' + _userEmail
-                  //   : 'Sign in failed'),
-                  // style: TextStyle(color: Colors.red),
-                  //   )
+                  child: Text(
+                    _success == 1
+                        ? ''
+                        : (
+                    _success == 2
+                        ? 'Successfully signed in ' + _userEmail
+                    : 'Sign in failed'),
+                  style: const TextStyle(color: Colors.red),
+                    )
                   ),
                 const SizedBox(height: 40,),
                 Container(
@@ -131,9 +135,9 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.black,
                     elevation: 7,
                     child: GestureDetector(
-                      // onTap: () async{
-                      //   _singIn();
-                      // },
+                      onTap: () async{
+                        _singIn();
+                      },
                       child: const Center(
                         child: Text(
                           'LOGIN',

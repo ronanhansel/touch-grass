@@ -15,27 +15,27 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
 
-  // final TextEditingController _emailController = TextEditingController();
-  // final TextEditingController _passwordController = TextEditingController();
-  // late bool _sucess;
-  // late String _userEmail;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  late bool _sucess;
+  late String _userEmail;
 
-  // void _register() async {
-  //   final User user = (
-  //   await _auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)
-  //   ).user;
+  void _register() async {
+    final User? user = (
+    await _auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)
+    ).user;
 
-  //   if(user != null) {
-  //     setState(() {
-  //       _sucess = true;
-  //       _userEmail = user.email;
-  //     });
-  //   } else {
-  //     setState(() {
-  //       _sucess = false;
-  //     });
-  //   }
-  // }
+    if(user != null) {
+      setState(() {
+        _sucess = true;
+        _userEmail = user.email!;
+      });
+    } else {
+      setState(() {
+        _sucess = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +62,10 @@ class _SignupPageState extends State<SignupPage> {
             padding: const EdgeInsets.only(top: 35, left: 20, right: 30),
             child: Column(
               children: <Widget>[
-                const TextField(
-                  // controller: _emailController,
-                  decoration: InputDecoration(
+                TextField(
+                  style: const TextStyle(color: Colors.black),
+                  controller: _emailController,
+                  decoration: const InputDecoration(
                       labelText: 'EMAIL',
                       labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -78,9 +79,10 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                 ),
                 const SizedBox(height: 20,),
-                const TextField(
-                  // controller: _passwordController,
-                  decoration: InputDecoration(
+                TextField(
+                  style: const TextStyle(color: Colors.black),
+                  controller: _passwordController,
+                  decoration: const InputDecoration(
                       labelText: 'PASSWORD',
                       labelStyle: TextStyle(
                           fontFamily: 'Montserrat',
@@ -102,21 +104,21 @@ class _SignupPageState extends State<SignupPage> {
                     shadowColor: Colors.greenAccent,
                     color: Colors.black,
                     elevation: 7,
-                    // child: GestureDetector(
-                    //     onTap: () async{
-                    //       _register();
-                    //     },
-                    //     child: Center(
-                    //         child: Text(
-                    //             'SIGNUP',
-                    //             style: TextStyle(
-                    //                 color: Colors.white,
-                    //                 fontWeight: FontWeight.bold,
-                    //                 fontFamily: 'Montserrat'
-                    //             )
-                    //         )
-                    //     )
-                    // ),
+                    child: GestureDetector(
+                        onTap: () async{
+                          _register();
+                        },
+                        child: const Center(
+                            child: Text(
+                                'SIGNUP',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat'
+                                )
+                            )
+                        )
+                    ),
                   ),
                 ),
                 const SizedBox(height: 15,),
