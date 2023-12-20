@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
           onSurface: Color.fromRGBO(238, 240, 227, 1),
         )),
         debugShowCheckedModeBanner: false,
-        home: const LoginPage()
-        // home: const Navigation())
+        // home: const LoginPage()
+        home: const Navigation()
       //   routes: <String, WidgetBuilder>{
       //   '/signup': (BuildContext context) => const SignupPage()
       // },
