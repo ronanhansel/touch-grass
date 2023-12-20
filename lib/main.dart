@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'signup.dart';
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         )),
         debugShowCheckedModeBanner: false,
         home: const LoginPage()
-        // home: const Navigation());
+        // home: const Navigation())
       //   routes: <String, WidgetBuilder>{
       //   '/signup': (BuildContext context) => const SignupPage()
       // },
