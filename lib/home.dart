@@ -46,160 +46,163 @@ Widget cardBuilder(context, index, percentThresholdX, percentThresholdY) {
   double height = MediaQuery.of(context).size.height;
   double card_height = height * 0.60;
   double card_width = width * 0.95;
-  return Stack(
-    children: [
-      Positioned(
-        bottom: height * 0.05,
-        left: 0,
-        right: 0,
-        child: Stack(
-          children: [
-            // This is the image container
-            Container(
-              // alignment: Alignment.center,
-              height: card_height,
-              width: card_width,
-              decoration: BoxDecoration(
-                  image: const DecorationImage(
-                      image: NetworkImage(
-                          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1200px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'),
-                      fit: BoxFit.fitHeight),
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onBackground, //Theme.of(context).colorScheme.background,
-
-                  borderRadius: const BorderRadius.all(Radius.circular(20))),
-            ),
-            // This is gradient container
-            Container(
-              // alignment: Alignment.center,
-              height: card_height,
-              width: card_width,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.white.withOpacity(0.0),
-                        Colors.black.withOpacity(0.5),
-                      ],
-                      stops: const [
-                        0.0,
-                        0.75
-                      ]),
-                  border: Border.all(
-                    color: const Color.fromRGBO(238, 240, 227, 100),
-                  ),
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onBackground, //Theme.of(context).colorScheme.background,
-                  borderRadius: const BorderRadius.all(Radius.circular(20))),
-            ),
-            // This is the text container
-            Container(
-              // alignment: Alignment.center,
-              height: card_height,
-              width: card_width,
-              decoration: const BoxDecoration(
-                  //Theme.of(context).colorScheme.background,
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              padding: EdgeInsets.only(
-                  left: width * 0.05,
-                  bottom: width * 0.05,
-                  right: width * 0.05),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Look at the sky',
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Energy',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex.')
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      Positioned(
-        bottom: height * 0.05,
-        left: 0,
-        right: 0,
-        child: Stack(
-          children: [
-            AnimatedOpacity(
-              opacity: convertR(true, opacity),
-              duration: Duration.zero,
-              child: Container(
-                alignment: Alignment.center,
+  return Animate(
+    
+    child: Stack(
+      children: [
+        Positioned(
+          bottom: height * 0.05,
+          left: 0,
+          right: 0,
+          child: Stack(
+            children: [
+              // This is the image container
+              Container(
+                // alignment: Alignment.center,
                 height: card_height,
                 width: card_width,
                 decoration: BoxDecoration(
+                    image: const DecorationImage(
+                        image: NetworkImage(
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1200px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg'),
+                        fit: BoxFit.fitHeight),
                     color: Theme.of(context)
                         .colorScheme
-                        .onError, //Theme.of(context).colorScheme.background,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(.10),
-                        spreadRadius: 0,
-                        blurRadius: 3,
-                        offset:
-                            const Offset(1, 3), // changes position of shadow
-                      ),
-                    ],
+                        .onBackground, //Theme.of(context).colorScheme.background,
+    
                     borderRadius: const BorderRadius.all(Radius.circular(20))),
-                child: const Center(
-                    child: Icon(
-                  LineIcons.heart,
-                  color: Colors.white,
-                  size: 100,
-                )),
               ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: AnimatedOpacity(
-                  opacity: convertR(false, opacity),
-                  duration: Duration.zero,
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: card_height,
-                    width: card_width,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color.fromRGBO(238, 240, 227, 100),
-                        ),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .error, //Theme.of(context).colorScheme.background,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(.10),
-                            spreadRadius: 0,
-                            blurRadius: 3,
-                            offset: const Offset(1, 3), // changes position of shadow
-                          ),
+              // This is gradient container
+              Container(
+                // alignment: Alignment.center,
+                height: card_height,
+                width: card_width,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.white.withOpacity(0.0),
+                          Colors.black.withOpacity(0.5),
                         ],
-                        borderRadius: const BorderRadius.all(Radius.circular(20))),
-                    child: const Icon(
-                      LineIcons.heartBroken,
-                      color: Colors.white,
-                      size: 100,
+                        stops: const [
+                          0.0,
+                          0.75
+                        ]),
+                    border: Border.all(
+                      color: const Color.fromRGBO(238, 240, 227, 100),
                     ),
-                  )),
-            ),
-          ],
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground, //Theme.of(context).colorScheme.background,
+                    borderRadius: const BorderRadius.all(Radius.circular(20))),
+              ),
+              // This is the text container
+              Container(
+                // alignment: Alignment.center,
+                height: card_height,
+                width: card_width,
+                decoration: const BoxDecoration(
+                    //Theme.of(context).colorScheme.background,
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                padding: EdgeInsets.only(
+                    left: width * 0.05,
+                    bottom: width * 0.05,
+                    right: width * 0.05),
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Look at the sky',
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      'Energy',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Text(
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex.')
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    ],
+        Positioned(
+          bottom: height * 0.05,
+          left: 0,
+          right: 0,
+          child: Stack(
+            children: [
+              AnimatedOpacity(
+                opacity: convertR(true, opacity),
+                duration: Duration.zero,
+                child: Container(
+                  alignment: Alignment.center,
+                  height: card_height,
+                  width: card_width,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onError, //Theme.of(context).colorScheme.background,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(.10),
+                          spreadRadius: 0,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(1, 3), // changes position of shadow
+                        ),
+                      ],
+                      borderRadius: const BorderRadius.all(Radius.circular(20))),
+                  child: const Center(
+                      child: Icon(
+                    LineIcons.heart,
+                    color: Colors.white,
+                    size: 100,
+                  )),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: AnimatedOpacity(
+                    opacity: convertR(false, opacity),
+                    duration: Duration.zero,
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: card_height,
+                      width: card_width,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color.fromRGBO(238, 240, 227, 100),
+                          ),
+                          color: Theme.of(context)
+                              .colorScheme
+                              .error, //Theme.of(context).colorScheme.background,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(.10),
+                              spreadRadius: 0,
+                              blurRadius: 3,
+                              offset: const Offset(1, 3), // changes position of shadow
+                            ),
+                          ],
+                          borderRadius: const BorderRadius.all(Radius.circular(20))),
+                      child: const Icon(
+                        LineIcons.heartBroken,
+                        color: Colors.white,
+                        size: 100,
+                      ),
+                    )),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
   );
 }
 
