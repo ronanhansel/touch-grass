@@ -4,25 +4,39 @@ import 'package:gdsc_solution/community.dart';
 import 'package:gdsc_solution/home.dart';
 import 'package:gdsc_solution/profile.dart';
 import 'package:gdsc_solution/splash_screen.dart';
+import 'package:gdsc_solution/tasks.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
-
   @override
-  State<Navigation> createState() => _HomePageState();
+  State<Navigation> createState() => _NavigationState();
 }
 
-class _HomePageState extends State<Navigation> {
+class _NavigationState extends State<Navigation> {
+  final _homeKey = UniqueKey();
+  void changeIndex(index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    debugPrint('Changed index $index');
+  }
+
   int _selectedIndex = 0;
   bool show = true;
-  static const List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    Community(),
-    Profile(),
-  ];
+  late List<Widget> _widgetOptions;
   @override
+  void initState() {
+    super.initState();
+    _widgetOptions = <Widget>[
+      Home(changeIndex, key: _homeKey,), // Pass the function directly
+      Community(),
+      Profile(),
+      Tasks(),
+    ];
+  }
+
   Widget build(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 4310), () {
       setState(() {
@@ -77,11 +91,7 @@ class _HomePageState extends State<Navigation> {
                       ),
                     ],
                     selectedIndex: _selectedIndex,
-                    onTabChange: (index) {
-                      setState(() {
-                        _selectedIndex = index;
-                      });
-                    },
+                    onTabChange: (index) => changeIndex(index),
                   ),
                 ),
               )),
