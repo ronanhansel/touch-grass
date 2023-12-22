@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gdsc_solution/login.dart';
-import 'package:gdsc_solution/navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gdsc_solution/navigation.dart';
 import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'signup.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: 'touch-grass',
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -37,13 +35,11 @@ class MyApp extends StatelessWidget {
           onSurface: Color.fromRGBO(238, 240, 227, 1),
         )),
         debugShowCheckedModeBanner: false,
-        home: const LoginPage()
-        // home: const Navigation());
-      //   routes: <String, WidgetBuilder>{
-      //   '/signup': (BuildContext context) => const SignupPage()
-      // },
-    );
-        
+        // home: const LoginPage()
+        home: const Navigation()
+        //   routes: <String, WidgetBuilder>{
+        //   '/signup': (BuildContext context) => const SignupPage()
+        // },
+        );
   }
 }
-
