@@ -39,14 +39,57 @@ class _HomeState extends State<Home> {
       'Lmao stop',
       'Lmao',
       'LMAMAMAMAOAOO'
+    ],
+    [
+      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
+      'Lmao stop',
+      'Lmao',
+      'LMAMAMAMAOAOO'
+    ],
+    [
+      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
+      'Lmao stop',
+      'Lmao',
+      'LMAMAMAMAOAOO'
+    ],
+    [
+      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
+      'Lmao stop',
+      'Lmao',
+      'LMAMAMAMAOAOO'
+    ],
+    [
+      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
+      'Lmao stop',
+      'Lmao',
+      'LMAMAMAMAOAOO'
+    ],
+    [
+      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
+      'Lmao stop',
+      'Lmao',
+      'LMAMAMAMAOAOO'
+    ],
+    [
+      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
+      'Lmao stop',
+      'Lmao',
+      'LMAMAMAMAOAOO'
     ]
   ];
 
-  bool _toggle = false;
-  void changeToggle() {
-    setState(() {
-      _toggle = _toggle ? false : true;
-    });
+  bool _toggleright = false;
+  bool _toggleleft = false;
+  void changeToggle(bool right) {
+    if (right) {
+      setState(() {
+        _toggleright = _toggleright ? false : true;
+      });
+    } else {
+      setState(() {
+        _toggleleft = _toggleleft ? false : true;
+      });
+    }
   }
 
   @override
@@ -81,7 +124,7 @@ class _HomeState extends State<Home> {
                       widget.changeIndex, changeToggle),
               allowedSwipeDirection: AllowedSwipeDirection.only(
                   up: false, down: true, left: true, right: true),
-              numberOfCardsDisplayed: cards.length,
+              numberOfCardsDisplayed: 4,
               isLoop: false,
             ),
             Positioned(
@@ -113,9 +156,13 @@ class _HomeState extends State<Home> {
                   )
                 ]),
               )
-                  .animate(target: _toggle ? 1 : 0)
-                  .shake(duration: 500.milliseconds, hz: 10)
-                  .shimmer(),
+                  .animate(target: _toggleleft ? 1 : 0)
+                  .shake(duration: 300.milliseconds, hz: 6)
+                  .animate(target: _toggleright ? 1 : 0)
+                  .shakeY(
+                    duration: 300.milliseconds,
+                    hz: 2,
+                  ),
             ),
           ],
         ),
@@ -347,9 +394,10 @@ bool _onSwipe(
   debugPrint('The card $previousIndex was swiped $direction to $currentIndex');
   if (direction == CardSwiperDirection.left) {
     debugPrint('Left function');
+    changeToggle(false);
   } else if (direction == CardSwiperDirection.right) {
     debugPrint('Right function');
-    changeToggle();
+    changeToggle(true);
   } else if (direction == CardSwiperDirection.bottom) {
     debugPrint('Bottom function');
     downFunction(3);
