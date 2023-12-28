@@ -13,8 +13,10 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
   final CardSwiperController controller = CardSwiperController();
+  late AnimationController rightSwipeController;
+  late AnimationController leftSwipeController;
   List<List<String>> cardsContent = [
     [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1200px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg',
@@ -78,25 +80,44 @@ class _HomeState extends State<Home> {
     ]
   ];
 
-  bool _toggleright = false;
-  bool _toggleleft = false;
+  int nTask = 0;
   void changeToggle(bool right) {
     if (right) {
       setState(() {
-        _toggleright = _toggleright ? false : true;
+        rightSwipeController.reset();
+        rightSwipeController
+            .forward()
+            .then((value) => rightSwipeController.reset());
+        nTask += 1;
       });
     } else {
       setState(() {
-        _toggleleft = _toggleleft ? false : true;
+        leftSwipeController.reset();
+        leftSwipeController
+            .forward()
+            .then((value) => leftSwipeController.reset());
       });
     }
   }
 
   @override
+  void initState() {
+    rightSwipeController = AnimationController(vsync: this);
+    leftSwipeController = AnimationController(vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    rightSwipeController.dispose();
+    leftSwipeController.dispose();
+    controller.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    int nTask = 0;
     List<Widget> cards = [for (var i in cardsContent) Text(i.toString())];
     return SafeArea(
       child: Scaffold(
@@ -156,9 +177,9 @@ class _HomeState extends State<Home> {
                   )
                 ]),
               )
-                  .animate(target: _toggleleft ? 1 : 0)
+                  .animate(controller: leftSwipeController)
                   .shake(duration: 300.milliseconds, hz: 6)
-                  .animate(target: _toggleright ? 1 : 0)
+                  .animate(controller: rightSwipeController)
                   .shakeY(
                     duration: 300.milliseconds,
                     hz: 2,
@@ -395,9 +416,11 @@ bool _onSwipe(
   if (direction == CardSwiperDirection.left) {
     debugPrint('Left function');
     changeToggle(false);
+    //TODO: Implement dismissing tasks.
   } else if (direction == CardSwiperDirection.right) {
     debugPrint('Right function');
     changeToggle(true);
+    //TODO: Implement adding tasks.
   } else if (direction == CardSwiperDirection.bottom) {
     debugPrint('Bottom function');
     downFunction(3);
