@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:gdsc_solution/navigation.dart';
+import 'package:gdsc_solution/tasks.dart';
 import 'package:line_icons/line_icons.dart';
 
 class Home extends StatefulWidget {
@@ -17,74 +21,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   final CardSwiperController controller = CardSwiperController();
   late AnimationController rightSwipeController;
   late AnimationController leftSwipeController;
-  List<List<String>> cardsContent = [
-    [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1200px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg',
-      'Look at the sky',
-      'Energy',
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex.'
-    ],
-    [
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project.jpg/1200px-Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project.jpg',
-      'Look at yourself',
-      'Consumption',
-      'Description'
-    ],
-    [
-      'https://www.artchive.com/wp-content/uploads/2023/04/Self-Portrait-with-Dark-Felt-Hat-VAN-GOGH-Vincent-1886-2-scaled.jpg',
-      'Look at me',
-      'Transportation',
-      'Description'
-    ],
-    [
-      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
-      'Lmao stop',
-      'Lmao',
-      'LMAMAMAMAOAOO'
-    ],
-    [
-      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
-      'Lmao stop',
-      'Lmao',
-      'LMAMAMAMAOAOO'
-    ],
-    [
-      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
-      'Lmao stop',
-      'Lmao',
-      'LMAMAMAMAOAOO'
-    ],
-    [
-      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
-      'Lmao stop',
-      'Lmao',
-      'LMAMAMAMAOAOO'
-    ],
-    [
-      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
-      'Lmao stop',
-      'Lmao',
-      'LMAMAMAMAOAOO'
-    ],
-    [
-      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
-      'Lmao stop',
-      'Lmao',
-      'LMAMAMAMAOAOO'
-    ],
-    [
-      'https://ka-perseus-images.s3.amazonaws.com/653f09fedc305ad96ff0f7272df19fa7624f3c7e.jpg',
-      'Lmao stop',
-      'Lmao',
-      'LMAMAMAMAOAOO'
-    ]
-  ];
+  late AnimationController buttonController;
 
   int nTask = 0;
+  bool loaded = false;
   void changeToggle(bool right) {
     if (right) {
       setState(() {
-        rightSwipeController.reset();
+        // rightSwipeController.reset();
         rightSwipeController
             .forward()
             .then((value) => rightSwipeController.reset());
@@ -92,7 +36,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       });
     } else {
       setState(() {
-        leftSwipeController.reset();
+        // leftSwipeController.reset();
         leftSwipeController
             .forward()
             .then((value) => leftSwipeController.reset());
@@ -100,10 +44,27 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     }
   }
 
+  Future<List> getCardInfo() async {
+    final String response =
+        await rootBundle.loadString('assets/data/retrieved_tasks.json');
+    final data = await json.decode(response);
+    return data;
+  }
+
+  List<dynamic> cardInfo = [''];
   @override
   void initState() {
     rightSwipeController = AnimationController(vsync: this);
     leftSwipeController = AnimationController(vsync: this);
+    buttonController = AnimationController(vsync: this);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      cardInfo = await getCardInfo();
+      if (cardInfo.isNotEmpty) {
+        setState(() {
+          loaded = true;
+        });
+      }
+    });
     super.initState();
   }
 
@@ -111,6 +72,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   void dispose() {
     rightSwipeController.dispose();
     leftSwipeController.dispose();
+    buttonController.dispose();
     controller.dispose();
     super.dispose();
   }
@@ -118,72 +80,100 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    List<Widget> cards = [for (var i in cardsContent) Text(i.toString())];
+    // List<Widget> cards = [for (var i in cardInfo) Text(i.toString())];
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
-            CardSwiper(
-              cardsCount: cards.length,
-              cardBuilder: (context, index, percentThresholdX,
-                      percentThresholdY) =>
-                  cardBuilder(
-                      context,
-                      percentThresholdX,
-                      percentThresholdY,
-                      cardsContent[index][0],
-                      cardsContent[index][1],
-                      cardsContent[index][2],
-                      cardsContent[index][3]),
-              controller: controller,
-              onSwipe: (
-                previousIndex,
-                currentIndex,
-                direction,
-              ) =>
-                  _onSwipe(previousIndex, currentIndex, direction,
-                      widget.changeIndex, changeToggle),
-              allowedSwipeDirection: AllowedSwipeDirection.only(
-                  up: false, down: true, left: true, right: true),
-              numberOfCardsDisplayed: 4,
-              isLoop: false,
-            ),
+            loaded
+                ? CardSwiper(
+                    cardsCount: cardInfo.length,
+                    cardBuilder: (context, index, percentThresholdX,
+                            percentThresholdY) =>
+                        cardBuilder(
+                            context,
+                            percentThresholdX,
+                            percentThresholdY,
+                            cardInfo[index][1],
+                            cardInfo[index][2],
+                            cardInfo[index][3],
+                            cardInfo[index][4],
+                            cardInfo[index][5]),
+                    controller: controller,
+                    onSwipe: (
+                      previousIndex,
+                      currentIndex,
+                      direction,
+                    ) =>
+                        _onSwipe(previousIndex, currentIndex, direction,
+                            widget.changeIndex, changeToggle, context, Tasks()),
+                    allowedSwipeDirection: AllowedSwipeDirection.only(
+                        up: false, down: true, left: true, right: true),
+                    numberOfCardsDisplayed: 4,
+                    isLoop: false,
+                  )
+                : const Center(child: CircularProgressIndicator()),
             Positioned(
               top: height * 0.02,
               left: width * 0.5 - 200 / 2,
-              child: Container(
-                height: 50,
-                width: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).colorScheme.primary,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.10),
-                      spreadRadius: 0,
-                      blurRadius: 0,
-                      offset: const Offset(3, 3), // changes position of shadow
+              child: Hero(
+                tag: 'bg',
+                child: GestureDetector(
+                  onTap: () {
+                    buttonController.forward().then((value) => buttonController
+                        .reverse()
+                        .then((value) => buttonController.reset()));
+                    Future.delayed(const Duration(milliseconds: 240), () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Tasks()));
+                    });
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).colorScheme.primary,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(.10),
+                          spreadRadius: 0,
+                          blurRadius: 0,
+                          offset:
+                              const Offset(3, 3), // changes position of shadow
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text(
-                    '$nTask Tasks saved!',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                        color: Colors.black),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '$nTask Tasks saved!',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                                color: Colors.black),
+                          ),
+                        ]),
                   )
-                ]),
-              )
-                  .animate(controller: leftSwipeController)
-                  .shake(duration: 300.milliseconds, hz: 6)
-                  .animate(controller: rightSwipeController)
-                  .shakeY(
-                    duration: 300.milliseconds,
-                    hz: 2,
-                  ),
+                      .animate(controller: leftSwipeController, autoPlay: false)
+                      .shake(duration: 300.milliseconds, hz: 6)
+                      .animate(
+                          controller: rightSwipeController, autoPlay: false)
+                      .shakeY(
+                        duration: 300.milliseconds,
+                        hz: 2,
+                      )
+                      .animate(controller: buttonController, autoPlay: false)
+                      .scale(
+                          begin: Offset(1, 1),
+                          end: Offset(0.90, 0.90),
+                          curve: Curves.easeIn,
+                          duration: 120.ms),
+                ),
+              ),
             ),
           ],
         ),
@@ -200,6 +190,7 @@ Widget cardBuilder(
   String imgLink,
   String title,
   String type,
+  String xp,
   String description,
 ) {
   double opacity = normaliser(percentThresholdX, 1000, -1000);
@@ -276,7 +267,7 @@ Widget cardBuilder(
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    type,
+                    '$type • $xp XP',
                     style: TextStyle(fontSize: 18),
                   ),
                   Text(description)
@@ -362,11 +353,6 @@ Widget cardBuilder(
       ),
     ],
   );
-//.animate(controller: ).fadeOut(delay: 4000.ms, duration: 300.ms, curve: Curves.easeIn);
-}
-
-Widget card() {
-  return Container();
 }
 
 double convertR(bool right, current) {
@@ -411,6 +397,8 @@ bool _onSwipe(
   CardSwiperDirection direction,
   Function downFunction,
   Function changeToggle,
+  BuildContext context,
+  Widget destination,
 ) {
   debugPrint('The card $previousIndex was swiped $direction to $currentIndex');
   if (direction == CardSwiperDirection.left) {
@@ -423,7 +411,9 @@ bool _onSwipe(
     //TODO: Implement adding tasks.
   } else if (direction == CardSwiperDirection.bottom) {
     debugPrint('Bottom function');
-    downFunction(3);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => destination));
+    // downFunction(3);
   }
   return true;
 }
