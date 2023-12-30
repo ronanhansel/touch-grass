@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:gdsc_solution/navigation.dart';
 import 'package:gdsc_solution/tasks.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -106,7 +104,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       direction,
                     ) =>
                         _onSwipe(previousIndex, currentIndex, direction,
-                            widget.changeIndex, changeToggle, context, Tasks()),
+                            widget.changeIndex, changeToggle, context, const Tasks()),
                     allowedSwipeDirection: AllowedSwipeDirection.only(
                         up: false, down: true, left: true, right: true),
                     numberOfCardsDisplayed: 4,
@@ -116,63 +114,59 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             Positioned(
               top: height * 0.02,
               left: width * 0.5 - 200 / 2,
-              child: Hero(
-                tag: 'bg',
-                child: GestureDetector(
-                  onTap: () {
-                    buttonController.forward().then((value) => buttonController
-                        .reverse()
-                        .then((value) => buttonController.reset()));
-                    Future.delayed(const Duration(milliseconds: 240), () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Tasks()));
-                    });
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Theme.of(context).colorScheme.primary,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(.10),
-                          spreadRadius: 0,
-                          blurRadius: 0,
-                          offset:
-                              const Offset(3, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
+              child: GestureDetector(
+                onTap: () {
+                  buttonController.forward().then((value) => buttonController
+                      .reverse()
+                      .then((value) => buttonController.reset()));
+                  Future.delayed(const Duration(milliseconds: 240), () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const Tasks()));
+                  });
+                },
+                child: Container(
+                  height: 50,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).colorScheme.primary,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(.10),
+                        spreadRadius: 0,
+                        blurRadius: 0,
+                        offset:
+                            const Offset(3, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        DefaultTextStyle(
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
+                              color: Colors.black),
+                          child: Text(
                             '$nTask Tasks saved!',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                                color: Colors.black),
                           ),
-                        ]),
-                  )
-                      .animate(controller: leftSwipeController, autoPlay: false)
-                      .shake(duration: 300.milliseconds, hz: 6)
-                      .animate(
-                          controller: rightSwipeController, autoPlay: false)
-                      .shakeY(
-                        duration: 300.milliseconds,
-                        hz: 2,
-                      )
-                      .animate(controller: buttonController, autoPlay: false)
-                      .scale(
-                          begin: Offset(1, 1),
-                          end: Offset(0.90, 0.90),
-                          curve: Curves.easeIn,
-                          duration: 120.ms),
-                ),
+                        ),
+                      ]),
+                )
+                    .animate(controller: leftSwipeController, autoPlay: false)
+                    .shake(duration: 300.milliseconds, hz: 6)
+                    .animate(controller: rightSwipeController, autoPlay: false)
+                    .shakeY(
+                      duration: 300.milliseconds,
+                      hz: 2,
+                    )
+                    .animate(controller: buttonController, autoPlay: false)
+                    .scale(
+                        begin: const Offset(1, 1),
+                        end: const Offset(0.90, 0.90),
+                        curve: Curves.easeIn,
+                        duration: 120.ms),
               ),
             ),
           ],
@@ -264,11 +258,11 @@ Widget cardBuilder(
                 children: [
                   Text(
                     title,
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     '$type • $xp XP',
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                   Text(description)
                 ],
