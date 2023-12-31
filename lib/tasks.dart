@@ -15,6 +15,16 @@ class _TasksState extends State<Tasks> {
     ['Pick up 2 plastic bags', 'waste'],
     ['Prepare a "green" mean', 'consumption']
   ];
+  List<List<String>> insights = [
+    [
+      'Energy saved!',
+      'If you\'ve saved 200 grams of carbon, that would be the equivalent of charging your phone 3 times!'
+    ],
+    [
+      'Water ~ energy',
+      'Replacing one serving of bottled water with tap water saves ~80 grams of carbon. That\'s boiling water to make a cup of tea!'
+    ]
+  ];
 
   bool check = false;
   void changeCheck() {
@@ -52,7 +62,7 @@ class _TasksState extends State<Tasks> {
             actions: [
               IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.more_vert,
                     color: Colors.black,
                   ))
@@ -77,117 +87,22 @@ class _TasksState extends State<Tasks> {
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    height: height * 0.27,
-                    width: width * 0.5,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color.fromRGBO(238, 240, 227, 100),
-                        ),
-                        color: Color.fromRGBO(86, 97, 53, 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            width: width * 0.1,
-                            height: width * 0.1,
-                            decoration: const BoxDecoration(
-                                color: Color.fromRGBO(240, 240, 212, 1),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(360))),
-                            child: Icon(Icons.lightbulb_outline),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Text(
-                            'Did you know?',
-                            style: TextStyle(
-                              color: Color.fromRGBO(240, 240, 212, 1),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          const Text(
-                            'You\'ve saved 200 grams of carbon, the equivalent of charging your phone 3 times!',
-                            style: TextStyle(
-                              color: Color.fromRGBO(240, 240, 212, 1),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Container(
-                    height: height * 0.27,
-                    width: width * 0.5,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color.fromRGBO(238, 240, 227, 100),
-                        ),
-                        color: Color.fromRGBO(208, 217, 184, 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            width: width * 0.1,
-                            height: width * 0.1,
-                            decoration: const BoxDecoration(
-                                color: Color.fromRGBO(240, 240, 212, 1),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(360))),
-                            child: const Icon(Icons.lightbulb_outline),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Text(
-                            'Did you know?',
-                            style: TextStyle(
-                              color: Color.fromRGBO(240, 240, 212, 1),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          const Text(
-                            'You\'ve saved 200 grams of carbon, the equivalent of charging your phone 3 times!',
-                            style: TextStyle(
-                              color: Color.fromRGBO(240, 240, 212, 1),
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                    ),
+                  insightCard(insights[0][0], insights[0][1], true),
+                  Row(
+                    children: List.generate(
+                        insights.length - 1,
+                        (index) => Row(
+                              children: [
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                insightCard(insights[index + 1][0],
+                                    insights[index + 1][1], false),
+                              ],
+                            )),
                   ),
                 ],
               ),
@@ -214,6 +129,84 @@ class _TasksState extends State<Tasks> {
   }
 }
 //Consumption: Blue; Transportation: Red; Energy: Yellow; Waste: Green
+
+Widget insightCard(String title, String content, bool spotlight) {
+  return Builder(builder: (context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return Transform.scale(
+      scale: spotlight ? 1 : 0.95,
+      child: Container(
+        height: height * 0.3,
+        width: width * 0.6,
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(.10),
+                spreadRadius: 0,
+                blurRadius: 3,
+                offset: const Offset(1, 3), // changes position of shadow
+              ),
+            ],
+            border: Border.all(
+              color: const Color.fromRGBO(238, 240, 227, 100),
+            ),
+            color: spotlight
+                ? Color.fromRGBO(86, 97, 53, 1)
+                : Color.fromRGBO(240, 240, 212, 1),
+            borderRadius: const BorderRadius.all(Radius.circular(20))),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: width * 0.1,
+                height: width * 0.1,
+                decoration: const BoxDecoration(
+                    color: Color.fromRGBO(240, 240, 212, 1),
+                    borderRadius: BorderRadius.all(Radius.circular(360))),
+                child: const Icon(
+                  Icons.lightbulb_outline,
+                  color: Color.fromRGBO(65, 73, 40, 1),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                title,
+                style: TextStyle(
+                  color: spotlight
+                      ? Color.fromRGBO(240, 240, 212, 1)
+                      : Color.fromRGBO(65, 73, 40, 1),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              Text(
+                content,
+                style: TextStyle(
+                  color: spotlight
+                      ? Color.fromRGBO(240, 240, 212, 1)
+                      : Color.fromRGBO(65, 73, 40, 1),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  });
+}
 
 class TaskList extends StatefulWidget {
   final String taskName;
@@ -304,7 +297,7 @@ class _TaskListState extends State<TaskList> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 1,
           )
         ],
