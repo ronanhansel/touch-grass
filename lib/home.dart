@@ -103,8 +103,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       currentIndex,
                       direction,
                     ) =>
-                        _onSwipe(previousIndex, currentIndex, direction,
-                            widget.changeIndex, changeToggle, context, const Tasks()),
+                        _onSwipe(
+                            previousIndex,
+                            currentIndex,
+                            direction,
+                            widget.changeIndex,
+                            changeToggle,
+                            context,
+                            const Tasks()),
                     allowedSwipeDirection: AllowedSwipeDirection.only(
                         up: false, down: true, left: true, right: true),
                     numberOfCardsDisplayed: 4,
@@ -113,7 +119,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 : const Center(child: CircularProgressIndicator()),
             Positioned(
               top: height * 0.02,
-              left: width * 0.5 - 200 / 2,
+              left: width * 0.5 - (width * 0.5) / 2,
               child: GestureDetector(
                 onTap: () {
                   buttonController.forward().then((value) => buttonController
@@ -125,8 +131,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   });
                 },
                 child: Container(
-                  height: 50,
-                  width: 200,
+                  height: height * 0.08,
+                  width: width * 0.5,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Theme.of(context).colorScheme.primary,
@@ -146,7 +152,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         DefaultTextStyle(
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 17,
+                              fontSize: 20,
                               color: Colors.black),
                           child: Text(
                             '$nTask Tasks saved!',
@@ -258,7 +264,8 @@ Widget cardBuilder(
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     '$type • $xp XP',
