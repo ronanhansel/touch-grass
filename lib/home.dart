@@ -196,7 +196,7 @@ Widget cardBuilder(
   String imgLink,
   String title,
   String type,
-  String xp,
+  int xp,
   String description,
 ) {
   double opacity = normaliser(percentThresholdX, 1000, -1000);
