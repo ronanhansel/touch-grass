@@ -6,6 +6,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:gdsc_solution/tasks.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:gdsc_solution/provider/tasks_provider.dart';
 
 class Home extends StatefulWidget {
   final Function changeIndex;
@@ -43,11 +44,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   }
 
   Future<List> getCardInfo() async {
-    final String response =
-        await rootBundle.loadString('assets/data/retrieved_tasks.json');
-    final data = await json.decode(response);
-    return data;
+    // final String response =
+    //     await rootBundle.loadString('assets/data/retrieved_tasks.json');
+    // final data = await json.decode(response);
+    final tasks = await fetchData();
+    print(tasks);
+    return tasks;
   }
+  
 
   List<dynamic> cardInfo = [''];
   @override
@@ -57,6 +61,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     buttonController = AnimationController(vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       cardInfo = await getCardInfo();
+      print(cardInfo.length);
+      print(cardInfo[0]);
       if (cardInfo.isNotEmpty) {
         setState(() {
           loaded = true;
@@ -92,11 +98,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             context,
                             percentThresholdX,
                             percentThresholdY,
-                            cardInfo[index][1],
-                            cardInfo[index][2],
-                            cardInfo[index][3],
-                            cardInfo[index][4],
-                            cardInfo[index][5]),
+                            cardInfo[index]['photo'],
+                            cardInfo[index]['name'],
+                            cardInfo[index]['type'],
+                            cardInfo[index]['xp'],
+                            cardInfo[index]['detail']),
                     controller: controller,
                     onSwipe: (
                       previousIndex,
@@ -113,7 +119,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             const Tasks()),
                     allowedSwipeDirection: AllowedSwipeDirection.only(
                         up: false, down: true, left: true, right: true),
-                    numberOfCardsDisplayed: 4,
+                    numberOfCardsDisplayed: (cardInfo.length >= 4) ? 4 : cardInfo.length,
                     isLoop: false,
                   )
                 : const Center(child: CircularProgressIndicator()),
@@ -190,7 +196,7 @@ Widget cardBuilder(
   String imgLink,
   String title,
   String type,
-  String xp,
+  int xp,
   String description,
 ) {
   double opacity = normaliser(percentThresholdX, 1000, -1000);
