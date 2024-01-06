@@ -99,7 +99,7 @@ class _NavigationState extends State<Navigation> {
         show
             ? const SplashScreen()
                 .animate()
-                .fadeOut(delay: 4000.ms, duration: 300.ms, curve: Curves.easeIn)
+                .fadeOut(delay: 3900.ms, duration: 300.ms, curve: Curves.easeIn)
             : Container()
       ],
     );
