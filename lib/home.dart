@@ -1,7 +1,6 @@
-import 'dart:convert';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:gdsc_solution/tasks.dart';
@@ -48,10 +47,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     //     await rootBundle.loadString('assets/data/retrieved_tasks.json');
     // final data = await json.decode(response);
     final tasks = await fetchData();
-    print(tasks);
     return tasks;
   }
-  
 
   List<dynamic> cardInfo = [''];
   @override
@@ -61,8 +58,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     buttonController = AnimationController(vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       cardInfo = await getCardInfo();
-      print(cardInfo.length);
-      print(cardInfo[0]);
       if (cardInfo.isNotEmpty) {
         setState(() {
           loaded = true;
@@ -81,16 +76,29 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     // List<Widget> cards = [for (var i in cardInfo) Text(i.toString())];
     return SafeArea(
       child: Scaffold(
-        body: Stack(
-          children: [
-            loaded
-                ? CardSwiper(
+        body: loaded
+            ? Stack(
+                children: [
+                  Center(
+                    child: SizedBox(
+                      width: width * 0.7,
+                      child: const Text(
+                        """That's the end of today's list. Come back tomorrow to see more!""",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w600),
+                        overflow: TextOverflow.fade,
+                      ),
+                    ),
+                  ),
+                  CardSwiper(
                     cardsCount: cardInfo.length,
                     cardBuilder: (context, index, percentThresholdX,
                             percentThresholdY) =>
@@ -119,70 +127,85 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             const Tasks()),
                     allowedSwipeDirection: AllowedSwipeDirection.only(
                         up: false, down: true, left: true, right: true),
-                    numberOfCardsDisplayed: (cardInfo.length >= 4) ? 4 : cardInfo.length,
+                    numberOfCardsDisplayed:
+                        (cardInfo.length >= 4) ? 4 : cardInfo.length,
                     isLoop: false,
-                  )
-                : const Center(child: CircularProgressIndicator()),
-            Positioned(
-              top: height * 0.02,
-              left: width * 0.5 - (width * 0.5) / 2,
-              child: GestureDetector(
-                onTap: () {
-                  buttonController.forward().then((value) => buttonController
-                      .reverse()
-                      .then((value) => buttonController.reset()));
-                  Future.delayed(const Duration(milliseconds: 240), () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Tasks()));
-                  });
-                },
-                child: Container(
-                  height: height * 0.08,
-                  width: width * 0.5,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).colorScheme.primary,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(.10),
-                        spreadRadius: 0,
-                        blurRadius: 0,
-                        offset:
-                            const Offset(3, 3), // changes position of shadow
-                      ),
-                    ],
                   ),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        DefaultTextStyle(
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.black),
-                          child: Text(
-                            '$nTask Tasks saved!',
-                          ),
+                  Positioned(
+                    top: height * 0.02,
+                    left: width * 0.5 - (width * 0.5) / 2,
+                    child: GestureDetector(
+                      onTap: () {
+                        buttonController.forward().then((value) =>
+                            buttonController
+                                .reverse()
+                                .then((value) => buttonController.reset()));
+                        Future.delayed(const Duration(milliseconds: 240), () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Tasks()));
+                        });
+                      },
+                      child: Container(
+                        height: height * 0.08,
+                        width: width * 0.5,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).colorScheme.primary,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(.10),
+                              spreadRadius: 0,
+                              blurRadius: 0,
+                              offset: const Offset(
+                                  3, 3), // changes position of shadow
+                            ),
+                          ],
                         ),
-                      ]),
-                )
-                    .animate(controller: leftSwipeController, autoPlay: false)
-                    .shake(duration: 300.milliseconds, hz: 6)
-                    .animate(controller: rightSwipeController, autoPlay: false)
-                    .shakeY(
-                      duration: 300.milliseconds,
-                      hz: 2,
-                    )
-                    .animate(controller: buttonController, autoPlay: false)
-                    .scale(
-                        begin: const Offset(1, 1),
-                        end: const Offset(0.90, 0.90),
-                        curve: Curves.easeIn,
-                        duration: 120.ms),
-              ),
-            ),
-          ],
-        ),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              DefaultTextStyle(
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.black),
+                                child: Text(
+                                  '$nTask Tasks saved!',
+                                ),
+                              ),
+                            ]),
+                      )
+                          .animate(
+                              controller: leftSwipeController, autoPlay: false)
+                          .shake(duration: 300.milliseconds, hz: 6)
+                          .animate(
+                              controller: rightSwipeController, autoPlay: false)
+                          .shakeY(
+                            duration: 300.milliseconds,
+                            hz: 2,
+                          )
+                          .animate(
+                              controller: buttonController, autoPlay: false)
+                          .scale(
+                              begin: const Offset(1, 1),
+                              end: const Offset(0.90, 0.90),
+                              curve: Curves.easeIn,
+                              duration: 120.ms),
+                    ),
+                  ),
+                ],
+              )
+            : Center(
+                child: SizedBox(
+                height: width * 0.3,
+                width: width * 0.3,
+                child: const LoadingIndicator(
+                  indicatorType: Indicator.orbit,
+                  strokeWidth: 1,
+                ),
+              )),
       ),
     );
   }
@@ -219,13 +242,27 @@ Widget cardBuilder(
               height: card_height,
               width: card_width,
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(imgLink), fit: BoxFit.fitHeight),
+                  // image: DecorationImage(
+                  //     image: CachedNetworkImageProvider(imgLink),
+                  //     fit: BoxFit.fitHeight),
                   color: Theme.of(context)
                       .colorScheme
                       .onBackground, //Theme.of(context).colorScheme.background,
 
                   borderRadius: const BorderRadius.all(Radius.circular(20))),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: CachedNetworkImage(
+                  imageUrl: imgLink,
+                  fit: BoxFit.fitHeight,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                    child: CircularProgressIndicator(
+                        value: downloadProgress.progress),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+              ),
             ),
             // This is gradient container
             Container(

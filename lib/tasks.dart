@@ -10,10 +10,10 @@ class Tasks extends StatefulWidget {
 
 class _TasksState extends State<Tasks> {
   List<List<String>> savedTasks = [
-    ['Look at the sky', 'energy'],
-    ['Walk 10 minutes', 'transportation'],
-    ['Pick up 2 plastic bags', 'waste'],
-    ['Prepare a "green" mean', 'consumption']
+    ['Look at the sky', 'energy', '2'],
+    ['Walk 10 minutes', 'transportation', '3'],
+    ['Pick up 2 plastic bags', 'waste', '1'],
+    ['Prepare a "green" meal', 'consumption', '2']
   ];
   List<List<String>> insights = [
     [
@@ -119,10 +119,13 @@ class _TasksState extends State<Tasks> {
             ),
             Column(
               children: List.generate(
-                  savedTasks.length,
-                  (index) => TaskList(
-                      taskName: savedTasks[index][0],
-                      taskType: savedTasks[index][1])),
+                savedTasks.length,
+                (index) => TaskList(
+                  taskName: savedTasks[index][0],
+                  taskType: savedTasks[index][1],
+                  timeLeft: savedTasks[index][2],
+                ),
+              ),
             )
           ],
         ));
@@ -211,7 +214,12 @@ Widget insightCard(String title, String content, bool spotlight) {
 class TaskList extends StatefulWidget {
   final String taskName;
   final String taskType;
-  const TaskList({Key? key, required this.taskName, required this.taskType})
+  final String timeLeft;
+  const TaskList(
+      {Key? key,
+      required this.taskName,
+      required this.taskType,
+      required this.timeLeft})
       : super(key: key);
   @override
   State<TaskList> createState() => _TaskListState();
@@ -227,78 +235,139 @@ class _TaskListState extends State<TaskList> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            width: width * 0.95,
-            height: height * 0.07,
-            decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color.fromRGBO(238, 240, 227, 100),
+          Padding(
+            padding: EdgeInsets.only(left: 18),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          height: width * 0.03,
+                          width: width * 0.03,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(360),
+                            color: check
+                                ? Colors.grey
+                                : switch (widget.taskType) {
+                                    //Consumption: Blue; Transportation: Red;
+                                    //Energy: Yellow; Waste: Green
+                                    'consumption' => Colors.blue,
+                                    'transportation' => Colors.red,
+                                    'energy' => Colors.yellow[700],
+                                    'waste' => Colors.green,
+                                    String() => null
+                                  },
+                          ),
+                        ),
+                        SizedBox(
+                          height: width * 0.015,
+                        ),
+                        Container(
+                          height: width * 0.085,
+                          width: width * 0.01,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(360),
+                            color: check
+                                ? Colors.grey
+                                : switch (widget.taskType) {
+                                    //Consumption: Blue; Transportation: Red;
+                                    //Energy: Yellow; Waste: Green
+                                    'consumption' => Colors.blue,
+                                    'transportation' => Colors.red,
+                                    'energy' => Colors.yellow[700],
+                                    'waste' => Colors.green,
+                                    String() => null
+                                  },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.taskName,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              decoration: check
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                              decorationColor: Colors.black),
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              LineIcons.clock,
+                              size: 15,
+                            ),
+                            const SizedBox(
+                              width: 2,
+                            ),
+                            Text(
+                              'In ${widget.timeLeft} days',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  decoration: check
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  decorationColor: Colors.black),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.chevron_right_rounded,
+                              size: 17,
+                            ),
+                            Text(
+                              'Details',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  decoration: check
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  decorationColor: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                color: Theme.of(context).colorScheme.background,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(.10),
-                    spreadRadius: 0,
-                    blurRadius: 3,
-                    offset: const Offset(1, 3), // changes position of shadow
-                  ),
-                ],
-                borderRadius: const BorderRadius.all(Radius.circular(8))),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Transform.scale(
-                          scale: 1.5,
-                          child: Checkbox(
-                            fillColor:
-                                MaterialStateProperty.resolveWith((states) {
-                              if (!states.contains(MaterialState.selected)) {
-                                return Colors.grey[100];
-                              } else {
-                                return null;
-                              }
-                            }),
-                            checkColor: Colors.white,
-                            value: check,
-                            onChanged: (state) {
-                              setState(() {
-                                check = check ? false : true;
-                              });
-                            },
-                          )),
-                      Text(
-                        widget.taskName,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                  Container(
-                      width: 5,
-                      decoration: BoxDecoration(
-                          color: switch (widget.taskType) {
-                            //Consumption: Blue; Transportation: Red;
-                            //Energy: Yellow; Waste: Green
-                            'consumption' => Colors.blue,
-                            'transportation' => Colors.red,
-                            'energy' => Colors.yellow[600],
-                            'waste' => Colors.green,
-                            String() => null
-                          },
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8))))
-                ],
-              ),
+                Transform.scale(
+                    scale: 1.5,
+                    child: Checkbox(
+                      fillColor: MaterialStateProperty.resolveWith((states) {
+                        if (!states.contains(MaterialState.selected)) {
+                          return Colors.grey[100];
+                        } else {
+                          return null;
+                        }
+                      }),
+                      checkColor: Colors.white,
+                      value: check,
+                      onChanged: (state) {
+                        setState(() {
+                          check = check ? false : true;
+                        });
+                      },
+                    )),
+              ],
             ),
           ),
           const SizedBox(
-            height: 1,
+            height: 10,
           )
         ],
       ),

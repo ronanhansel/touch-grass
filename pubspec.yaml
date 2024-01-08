@@ -45,6 +45,10 @@ dependencies:
   http: ^1.1.2
   flutter_swipe_detector: ^2.0.0
   cloud_firestore: ^4.13.6
+  flutter_launcher_icons: ^0.13.1
+  loading_indicator: ^3.1.1
+  shimmer: ^3.0.0
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +102,13 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/app/icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+
 flutter_native_splash:
   # This package generates native code to customize Flutter's default white native splash screen
   # with background color and splash image.
@@ -122,7 +133,7 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  image: assets/splash.png
+  image: assets/app/splash.png
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,
