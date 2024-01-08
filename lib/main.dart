@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gdsc_solution/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gdsc_solution/navigation.dart';
+import 'package:gdsc_solution/signup.dart';
 import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,11 +16,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+  final Future<FirebaseApp> _initFirebaseSdk = Firebase.initializeApp();
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +42,14 @@ class MyApp extends StatelessWidget {
           onSurface: Color.fromRGBO(238, 240, 227, 1),
         )),
         debugShowCheckedModeBanner: false,
-        // home: const LoginPage()
+
+        // home: const SignupPage()
         home: const Navigation()
         //   routes: <String, WidgetBuilder>{
         //   '/signup': (BuildContext context) => const SignupPage()
         // },
         );
   }
+
+  
 }
