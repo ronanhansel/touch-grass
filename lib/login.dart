@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   void navigateNextPage(BuildContext ctx)
   {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_){
-      return const SignupPage();
+      return SignupPage();
     }));
   }
   final TextEditingController _emailController = TextEditingController();
@@ -39,6 +39,10 @@ class _LoginPageState extends State<LoginPage> {
       });
     }
   }
+
+  // Stream<User> get user{
+  //   return _auth.
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -129,27 +133,12 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 40,),
                 Container(
                   height: 40,
-                  child: Material(
-                    borderRadius: BorderRadius.circular(20),
-                    shadowColor: Colors.greenAccent,
-                    color: Colors.black,
-                    elevation: 7,
-                    child: GestureDetector(
-                      onTap: () async{
-                        _singIn();
-                      },
-                      child: const Center(
-                        child: Text(
-                          'LOGIN',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat'
-                          )
-                        )
-                      )
-                    ),
-                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _singIn();
+                    },
+                  child: const Text('Sign in'),
+             ),
                 ),
                 const SizedBox(height: 15,),
                 Row(
