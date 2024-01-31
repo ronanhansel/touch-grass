@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gdsc_solution/login.dart';
 import 'package:gdsc_solution/navigation.dart';
 import 'package:gdsc_solution/signup.dart';
 import 'firebase_options.dart';
@@ -42,8 +43,8 @@ class MyApp extends StatelessWidget {
         )),
         debugShowCheckedModeBanner: false,
 
-        // home: const SignupPage()
-        home: const Navigation()
+        home: const LoginPage()
+        // home: const Navigation()
         //   routes: <String, WidgetBuilder>{
         //   '/signup': (BuildContext context) => const SignupPage()
         // },
