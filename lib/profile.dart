@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -9,8 +12,29 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
 
+  User? currentUser = FirebaseAuth.instance.currentUser;
+  Map<String, dynamic>? userData;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    if (currentUser != null) {
+      var userDoc = await FirebaseFirestore.instance.collection('users').doc(currentUser!.uid).get();
+      if (userDoc.exists) {
+        setState(() {
+          userData = userDoc.data();
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -44,8 +68,8 @@ class _ProfileState extends State<Profile> {
                           SizedBox(
                             height: height / 30,
                           ),
-                          const Text(
-                            'lamthanhz',
+                          Text(
+                            '${userData?['name']}',
                             style: TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.white,

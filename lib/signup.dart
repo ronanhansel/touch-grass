@@ -62,11 +62,12 @@ class _SignupPageState extends State<SignupPage> {
   DocumentReference userDocRef = _firestore.collection('users').doc(user.uid);
 
   await userDocRef.set({
-    'name': '', // Update with actual data or keep as empty string
-    'photo': '', // Update with actual data or keep as empty string
-    'age': 0, // Update with actual data
-    'gender': '', // Update with actual data
-    // Add other fields as necessary
+    'name': '', 
+    'photo': '', 
+    'age': 0, 
+    'gender': '', 
+    'xp': 0,
+    'email': user.email,
   });
   print("created user");
 
