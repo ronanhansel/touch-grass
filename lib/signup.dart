@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gdsc_solution/navigation.dart';
+
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -22,23 +24,38 @@ class _SignupPageState extends State<SignupPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   void _register() async {
-    final User? user = (
-    await _auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)
-    ).user;
+  final User? user = (
+    await _auth.createUserWithEmailAndPassword(
+      email: _emailController.text, 
+      password: _passwordController.text
+    )
+  ).user;
 
-    if(user != null) {
-      setState(() {
-        _sucess = true;
-        _userEmail = user.email!;
-      });
-      // Call the method to create a Firestore document for the user
-      _createUserDocument(user);
-    } else {
-      setState(() {
-        _sucess = false;
-      });
-    }
+  if (!mounted) return; // Check if the widget is still in the widget tree
+
+  if (user != null) {
+    setState(() {
+      _sucess = true;
+      _userEmail = user.email!;
+    });
+
+    // Call the method to create a Firestore document for the user
+    _createUserDocument(user);
+
+    // Navigate to the Navigation screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const Navigation()),
+    );
+
+  } else {
+    setState(() {
+      _sucess = false;
+    });
   }
+}
+
+
 
   // Method to create a Firestore document for a new user
   Future<void> _createUserDocument(User user) async {
@@ -130,7 +147,7 @@ class _SignupPageState extends State<SignupPage> {
                     onPressed: () {
                       _register();
                     },
-                  child: const Text('Sign in'),
+                  child: const Text('Sign up'),
              ),
                 ),
                 const SizedBox(height: 15,),
