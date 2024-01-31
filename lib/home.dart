@@ -223,11 +223,11 @@ Widget cardBuilder(
   String description,
 ) {
   double opacity = normaliser(percentThresholdX, 1000, -1000);
-  double y_delta = normaliser(percentThresholdY, 1000, -1000);
+  double yDelta = normaliser(percentThresholdY, 1000, -1000);
   double width = MediaQuery.of(context).size.width;
   double height = MediaQuery.of(context).size.height;
-  double card_height = height * 0.60;
-  double card_width = width * 0.95;
+  double cardHeight = height * 0.60;
+  double cardWidth = width * 0.95;
   return Stack(
     children: [
       Positioned(
@@ -239,8 +239,8 @@ Widget cardBuilder(
             // This is the image container
             Container(
               // alignment: Alignment.center,
-              height: card_height,
-              width: card_width,
+              height: cardHeight,
+              width: cardWidth,
               decoration: BoxDecoration(
                   // image: DecorationImage(
                   //     image: CachedNetworkImageProvider(imgLink),
@@ -267,8 +267,8 @@ Widget cardBuilder(
             // This is gradient container
             Container(
               // alignment: Alignment.center,
-              height: card_height,
-              width: card_width,
+              height: cardHeight,
+              width: cardWidth,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.topCenter,
@@ -292,8 +292,8 @@ Widget cardBuilder(
             // This is the text container
             Container(
               // alignment: Alignment.center,
-              height: card_height,
-              width: card_width,
+              height: cardHeight,
+              width: cardWidth,
               decoration: const BoxDecoration(
                   //Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -332,8 +332,8 @@ Widget cardBuilder(
               duration: Duration.zero,
               child: Container(
                 alignment: Alignment.center,
-                height: card_height,
-                width: card_width,
+                height: cardHeight,
+                width: cardWidth,
                 decoration: BoxDecoration(
                     color: Theme.of(context)
                         .colorScheme
@@ -365,8 +365,8 @@ Widget cardBuilder(
                   duration: Duration.zero,
                   child: Container(
                     alignment: Alignment.center,
-                    height: card_height,
-                    width: card_width,
+                    height: cardHeight,
+                    width: cardWidth,
                     decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color.fromRGBO(238, 240, 227, 100),

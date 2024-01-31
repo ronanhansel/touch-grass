@@ -81,7 +81,7 @@ class _TasksState extends State<Tasks> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            Container(
+            SizedBox(
               height: height * 0.25,
               child: ListView(
                 shrinkWrap: true,
@@ -155,8 +155,8 @@ Widget insightCard(String title, String content, bool spotlight) {
               color: const Color.fromRGBO(238, 240, 227, 100),
             ),
             color: spotlight
-                ? Color.fromRGBO(86, 97, 53, 1)
-                : Color.fromRGBO(240, 240, 212, 1),
+                ? const Color.fromRGBO(86, 97, 53, 1)
+                : const Color.fromRGBO(240, 240, 212, 1),
             borderRadius: const BorderRadius.all(Radius.circular(20))),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -184,8 +184,8 @@ Widget insightCard(String title, String content, bool spotlight) {
                 title,
                 style: TextStyle(
                   color: spotlight
-                      ? Color.fromRGBO(240, 240, 212, 1)
-                      : Color.fromRGBO(65, 73, 40, 1),
+                      ? const Color.fromRGBO(240, 240, 212, 1)
+                      : const Color.fromRGBO(65, 73, 40, 1),
                   fontSize: 16,
                   fontWeight: FontWeight.w900,
                 ),
@@ -194,8 +194,8 @@ Widget insightCard(String title, String content, bool spotlight) {
                 content,
                 style: TextStyle(
                   color: spotlight
-                      ? Color.fromRGBO(240, 240, 212, 1)
-                      : Color.fromRGBO(65, 73, 40, 1),
+                      ? const Color.fromRGBO(240, 240, 212, 1)
+                      : const Color.fromRGBO(65, 73, 40, 1),
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                 ),
@@ -236,7 +236,7 @@ class _TaskListState extends State<TaskList> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 18),
+            padding: const EdgeInsets.only(left: 18),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

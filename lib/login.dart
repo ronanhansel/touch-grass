@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'signup.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -17,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   void navigateNextPage(BuildContext ctx)
   {
     Navigator.of(ctx).push(MaterialPageRoute(builder: (_){
-      return SignupPage();
+      return const SignupPage();
     }));
   }
   final TextEditingController _emailController = TextEditingController();
@@ -125,13 +123,13 @@ class _LoginPageState extends State<LoginPage> {
                         ? ''
                         : (
                     _success == 2
-                        ? 'Successfully signed in ' + _userEmail
+                        ? 'Successfully signed in $_userEmail'
                     : 'Sign in failed'),
                   style: const TextStyle(color: Colors.red),
                     )
                   ),
                 const SizedBox(height: 40,),
-                Container(
+                SizedBox(
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {

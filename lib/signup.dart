@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
+
   @override
   _SignupPageState createState() => _SignupPageState();
 }
@@ -124,7 +124,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 const SizedBox(height: 5.0,),
                 const SizedBox(height: 40,),
-                Container(
+                SizedBox(
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {

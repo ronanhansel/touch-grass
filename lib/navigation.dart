@@ -31,12 +31,13 @@ class _NavigationState extends State<Navigation> {
     super.initState();
     _widgetOptions = <Widget>[
       Home(changeIndex, key: _homeKey,), // Pass the function directly
-      Community(),
-      Profile(),
-      Tasks(),
+      const Community(),
+      const Profile(),
+      const Tasks(),
     ];
   }
 
+  @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 4310), () {
       setState(() {
