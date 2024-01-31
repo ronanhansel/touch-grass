@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'signup.dart';
+import 'package:gdsc_solution/navigation.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -26,16 +27,26 @@ class _LoginPageState extends State<LoginPage> {
   void _singIn() async {
     final User? user = (await _auth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)).user;
 
+    if (!mounted) return;
+
     if(user != null) {
       setState(() {
         _success = 2;
         _userEmail = user.email!;
       });
+
+      // Navigate to the Navigation screen
+      Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const Navigation()),
+    );
     } else {
       setState(() {
         _success = 3;
       });
     }
+
+
   }
 
   // Stream<User> get user{
