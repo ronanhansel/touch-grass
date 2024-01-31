@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -17,6 +18,9 @@ class _SignupPageState extends State<SignupPage> {
   late bool _sucess;
   late String _userEmail;
 
+  // Add the Firestore instance
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   void _register() async {
     final User? user = (
     await _auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text)
@@ -27,12 +31,39 @@ class _SignupPageState extends State<SignupPage> {
         _sucess = true;
         _userEmail = user.email!;
       });
+      // Call the method to create a Firestore document for the user
+      _createUserDocument(user);
     } else {
       setState(() {
         _sucess = false;
       });
     }
   }
+
+  // Method to create a Firestore document for a new user
+  Future<void> _createUserDocument(User user) async {
+  DocumentReference userDocRef = _firestore.collection('users').doc(user.uid);
+
+  await userDocRef.set({
+    'name': '', // Update with actual data or keep as empty string
+    'photo': '', // Update with actual data or keep as empty string
+    'age': 0, // Update with actual data
+    'gender': '', // Update with actual data
+    // Add other fields as necessary
+  });
+  print("created user");
+
+  // Placeholder data for sub-collections
+  Map<String, dynamic> placeholderData = {'placeholderField': 'placeholderValue'};
+
+  // Creating placeholder documents in each sub-collection
+  await userDocRef.collection('dismissed tasks').doc('placeholder').set(placeholderData);
+  await userDocRef.collection('saved tasks').doc('placeholder').set(placeholderData);
+  await userDocRef.collection('today tasks').doc('placeholder').set(placeholderData);
+
+  print("User document and sub-collections created in Firestore");
+}
+
 
   @override
   Widget build(BuildContext context) {
