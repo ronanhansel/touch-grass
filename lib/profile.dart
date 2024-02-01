@@ -31,7 +31,6 @@ class _ProfileState extends State<Profile> {
       }
     }
   }
-
   @override
   Widget build(BuildContext context) {
 
@@ -61,8 +60,8 @@ class _ProfileState extends State<Profile> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           CircleAvatar(
-                            backgroundImage:
-                                const AssetImage('touch-grass/img/ava.jpg'),
+                            backgroundImage: const NetworkImage(
+                                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"),
                             radius: height / 10,
                           ),
                           SizedBox(
@@ -87,9 +86,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        top: height / 2.6,
-                        left: width / 20,
-                        right: width / 20),
+                        top: height / 2.6, left: width / 20, right: width / 20),
                     child: Column(
                       children: <Widget>[
                         Container(
@@ -102,7 +99,6 @@ class _ProfileState extends State<Profile> {
                                     offset: Offset(0.0, 2.0))
                               ]),
                         ),
-                        
                       ],
                     ),
                   )
@@ -115,4 +111,3 @@ class _ProfileState extends State<Profile> {
     );
   }
 }
-  

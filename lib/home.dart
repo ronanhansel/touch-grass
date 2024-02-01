@@ -58,7 +58,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     buttonController = AnimationController(vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       cardInfo = await getCardInfo();
-      if (cardInfo.isNotEmpty) {
+      if (cardInfo.isNotEmpty & this.mounted) {
         setState(() {
           loaded = true;
         });
@@ -110,6 +110,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             cardInfo[index]['name'],
                             cardInfo[index]['type'],
                             cardInfo[index]['xp'],
+                            cardInfo[index]['expiration'],
                             cardInfo[index]['detail']),
                     controller: controller,
                     onSwipe: (
@@ -220,6 +221,7 @@ Widget cardBuilder(
   String title,
   String type,
   int xp,
+  int expiration,
   String description,
 ) {
   double opacity = normaliser(percentThresholdX, 1000, -1000);
@@ -275,7 +277,7 @@ Widget cardBuilder(
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.white.withOpacity(0.0),
-                        Colors.black.withOpacity(0.5),
+                        Colors.black.withOpacity(0.75),
                       ],
                       stops: const [
                         0.0,
@@ -298,9 +300,7 @@ Widget cardBuilder(
                   //Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               padding: EdgeInsets.only(
-                  left: width * 0.05,
-                  bottom: width * 0.05,
-                  right: width * 0.05),
+                  left: width * 0.05, bottom: width * 0.1, right: width * 0.05),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,7 +311,7 @@ Widget cardBuilder(
                         fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$type • $xp XP',
+                    '$type • $xp XP • $expiration days',
                     style: const TextStyle(fontSize: 18),
                   ),
                   Text(description)
