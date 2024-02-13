@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:gdsc_solution/community.dart';
+import 'package:gdsc_solution/community/community.dart';
 import 'package:gdsc_solution/home.dart';
-import 'package:gdsc_solution/profile.dart';
+import 'package:gdsc_solution/profile/profile_screen.dart';
 import 'package:gdsc_solution/splash_screen.dart';
 import 'package:gdsc_solution/tasks.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -32,7 +32,7 @@ class _NavigationState extends State<Navigation> {
     _widgetOptions = <Widget>[
       Home(changeIndex, key: _homeKey,), // Pass the function directly
       const Community(),
-      const Profile(),
+      const ProfileScreen(),
       const Tasks(),
     ];
   }
