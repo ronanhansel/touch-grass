@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 
 Future<Map> fetchAlbum() async {
@@ -18,6 +19,9 @@ Future<Map> fetchAlbum() async {
   }
 }
 
-void main() async {
-  print(await fetchAlbum());
+Future<List<Map<String, dynamic>>> fetchTask() async {
+  final tasksRef = FirebaseFirestore.instance.collection('tasks');
+  final snapshot = await tasksRef.get();
+  final tasks = snapshot.docs.map((doc) => doc.data()).toList();
+  return tasks;
 }

@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:gdsc_solution/functions/network.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:gdsc_solution/tasks.dart';
+import 'package:gdsc_solution/screens/tasks.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:gdsc_solution/provider/tasks_provider.dart';
 
 class Home extends StatefulWidget {
   final Function changeIndex;
@@ -46,7 +46,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     // final String response =
     //     await rootBundle.loadString('assets/data/retrieved_tasks.json');
     // final data = await json.decode(response);
-    final tasks = await fetchData();
+    final tasks = await fetchTask();
     return tasks;
   }
 

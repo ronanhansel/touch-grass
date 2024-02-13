@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadImg {
@@ -22,3 +23,5 @@ class UploadImg {
     await firestore.collection("users").doc(userId).update({"photo": imageUrl});
   }
 }
+
+// TODO: Implement get_user_info

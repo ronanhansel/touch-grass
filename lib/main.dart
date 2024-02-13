@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:gdsc_solution/authentication/login.dart';
-import 'firebase_options.dart';
+import 'package:gdsc_solution/constants.dart';
+import 'package:gdsc_solution/screens/login.dart';
 
 
 void main() async {
@@ -17,9 +18,11 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   MyApp({Key? key}) : super(key: key);
   final Future<FirebaseApp> _initFirebaseSdk = Firebase.initializeApp();
   final _navigatorKey = GlobalKey<NavigatorState>();
+  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +44,6 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
 
         home: const LoginPage()
-        // home: const Navigation()
-        //   routes: <String, WidgetBuilder>{
-        //   '/signup': (BuildContext context) => const SignupPage()
-        // },
         );
   }
 
