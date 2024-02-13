@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Container(
                   padding: const EdgeInsets.fromLTRB(15, 110, 0, 0),
-                  child: const Text("Hello Kavit",
+                  child: const Text("Hello",
                     style: TextStyle(
                       fontSize: 40, fontWeight: FontWeight.bold,
                       color: Colors.black

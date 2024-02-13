@@ -49,6 +49,8 @@ dependencies:
   loading_indicator: ^3.1.1
   shimmer: ^3.0.0
   cached_network_image: ^3.3.1
+  firebase_storage: ^11.6.5
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
