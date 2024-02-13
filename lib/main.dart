@@ -4,8 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gdsc_solution/constants.dart';
+import 'package:gdsc_solution/functions/auth.dart';
+import 'package:gdsc_solution/navigation.dart';
 import 'package:gdsc_solution/screens/login.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,10 +43,15 @@ class MyApp extends StatelessWidget {
           onSurface: Color.fromRGBO(238, 240, 227, 1),
         )),
         debugShowCheckedModeBanner: false,
-
-        home: const LoginPage()
-        );
+        home: StreamBuilder(
+            stream: Auth().authStateChanges,
+            builder: (context, snapshot) {
+              // Is not logged in
+              if (!snapshot.hasData) {
+                return const LoginPage();
+              } else {
+                return const Navigation();
+              }
+            }));
   }
-
-  
 }

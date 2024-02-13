@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:gdsc_solution/functions/auth.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -11,7 +11,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   User? currentUser = FirebaseAuth.instance.currentUser;
   Map<String, dynamic>? userData;
 
@@ -23,7 +22,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _loadUserData() async {
     if (currentUser != null) {
-      var userDoc = await FirebaseFirestore.instance.collection('users').doc(currentUser!.uid).get();
+      var userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .get();
       if (userDoc.exists) {
         setState(() {
           userData = userDoc.data();
@@ -31,9 +33,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
-
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -69,7 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           Text(
                             '${userData?['name']}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -99,6 +101,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     offset: Offset(0.0, 2.0))
                               ]),
                         ),
+                        TextButton(
+                            onPressed: () {
+                              Auth().signOut();
+                            },
+                            child: Container(
+                                decoration:
+                                    const BoxDecoration(color: Colors.white),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Sign out",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                )))
                       ],
                     ),
                   )
