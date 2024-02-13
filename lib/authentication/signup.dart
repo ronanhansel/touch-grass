@@ -78,6 +78,7 @@ class _SignupPageState extends State<SignupPage> {
   await userDocRef.collection('dismissed tasks').doc('placeholder').set(placeholderData);
   await userDocRef.collection('saved tasks').doc('placeholder').set(placeholderData);
   await userDocRef.collection('today tasks').doc('placeholder').set(placeholderData);
+  await userDocRef.collection('posts').doc('placeholder').set(placeholderData);
 
   print("User document and sub-collections created in Firestore");
 }
