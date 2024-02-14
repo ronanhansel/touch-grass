@@ -80,6 +80,13 @@ flutter:
     - assets/data/retrieved_tasks.json
     - assets/icon/CameraIcon.svg
     - assets/app/icon.png
+    - assets/icon/Bell.svg
+    - assets/icon/Settings.svg
+    - assets/icon/Question mark.svg
+    - assets/icon/Log out.svg
+    - assets/icon/Call.svg
+    - assets/icon/User.svg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
