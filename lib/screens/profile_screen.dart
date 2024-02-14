@@ -67,27 +67,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 20),
             ProfileMenu(
               text: "My Account",
-              icon: "assets/icon/CameraIcon.svg",
+              icon: "assets/icon/User.svg",
               press: () => {},
             ),
             ProfileMenu(
               text: "Notifications",
-              icon: "assets/icon/CameraIcon.svg",
+              icon: "assets/icon/Bell.svg",
               press: () {},
             ),
             ProfileMenu(
               text: "Settings",
-              icon: "assets/icon/CameraIcon.svg",
+              icon: "assets/icon/Settings.svg",
               press: () {},
             ),
             ProfileMenu(
               text: "Help Center",
-              icon: "assets/icon/CameraIcon.svg",
+              icon: "assets/icon/Call.svg",
               press: () {},
             ),
             ProfileMenu(
             text: "Log Out",
-            icon: "assets/icon/CameraIcon.svg",
+            icon: "assets/icon/Log out.svg",
             press: () async {
                 try {
                     await Auth().signOut();
@@ -97,9 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     print('Logout error: $error');
                 }
             },
-),
-
-            
+            ),
           ],
         ),
       ),
