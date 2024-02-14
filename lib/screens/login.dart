@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'signup.dart';
 import 'package:gdsc_solution/navigation.dart';
 
+
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget {
@@ -17,31 +18,39 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   int _success = 1;
   String _userEmail = "";
+  // Add a loading state to your class
+  bool _isLoading = false;
 
-  void _singIn() async {
+  void _signIn() async {
+  setState(() => _isLoading = true);
+  try {
     final User? user = (await _auth.signInWithEmailAndPassword(
-            email: _emailController.text, password: _passwordController.text))
-        .user;
+      email: _emailController.text, 
+      password: _passwordController.text
+    )).user;
 
     if (!mounted) return;
 
     if (user != null) {
       setState(() {
         _success = 2;
-        _userEmail = user.email!;
+        _userEmail = user.email ?? 'No email available';
       });
-
-      // Navigate to the Navigation screen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const Navigation()),
       );
     } else {
-      setState(() {
-        _success = 3;
-      });
+      setState(() => _success = 3);
     }
+  } catch (e) {
+    setState(() => _success = 3);
+    final snackBar = SnackBar(content: Text('Sign in failed: $e'));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+  setState(() => _isLoading = false);
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -131,10 +140,10 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 40,
                 child: ElevatedButton(
-                  onPressed: () {
-                    _singIn();
-                  },
-                  child: const Text('Sign in'),
+                  onPressed: _isLoading ? null : _signIn,
+                  child: _isLoading 
+                      ? const CircularProgressIndicator()
+                      : const Text('Sign in'),
                 ),
               ),
               const SizedBox(
