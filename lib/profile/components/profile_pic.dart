@@ -37,6 +37,17 @@ class _ProfilePicState extends State<ProfilePic> {
 
   @override
   Widget build(BuildContext context) {
+
+    ImageProvider imageProvider;
+
+    if (userData != null && userData!['photo'] != null && (userData!['photo'] as String).isNotEmpty) {
+      // If there is a user photo URL and it's not empty, use NetworkImage
+      imageProvider = NetworkImage(userData!['photo']);
+    } else {
+      // If there is no user photo URL or it's empty, use the default AssetImage
+      imageProvider = const AssetImage('assets/app/icon.png');
+    }
+
     return SizedBox(
       height: 115,
       width: 115,
@@ -45,10 +56,8 @@ class _ProfilePicState extends State<ProfilePic> {
         clipBehavior: Clip.none,
         children: [
           CircleAvatar(
-            backgroundImage: userData != null && userData!['photo'] != null
-                ? NetworkImage(userData!['photo'] as String) // Cast to String
-                : const AssetImage('assets/app/icon.png') as ImageProvider, // Provide type for AssetImage
-            backgroundColor: Colors.transparent,
+          backgroundImage: imageProvider,
+          backgroundColor: Colors.transparent,
           ),
           Positioned(
             right: -16,
