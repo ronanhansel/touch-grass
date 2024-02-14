@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gdsc_solution/functions/auth.dart';
 import 'package:gdsc_solution/profile/components/profile_menu.dart';
 import 'package:gdsc_solution/profile/components/profile_pic.dart';
+import 'package:gdsc_solution/screens/login.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -23,7 +24,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _loadUserData() async {
-    if (currentUser != null) {
+  if (currentUser != null) {
+    try {
       var userDoc = await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)
@@ -33,8 +35,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           userData = userDoc.data();
         });
       }
+    } catch (e) {
+      // Handle errors here, e.g., show a message to the user
+      print('Error loading user data: $e');
     }
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,10 +86,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               press: () {},
             ),
             ProfileMenu(
-              text: "Log Out",
-              icon: "assets/icon/CameraIcon.svg",
-              press: () {Auth().signOut();},
-            ),
+            text: "Log Out",
+            icon: "assets/icon/CameraIcon.svg",
+            press: () async {
+                try {
+                    await Auth().signOut();
+                    // Navigate to login or another appropriate screen
+                } catch (error) {
+                    // Handle any errors here
+                    print('Logout error: $error');
+                }
+            },
+),
+
             
           ],
         ),
