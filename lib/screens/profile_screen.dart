@@ -81,24 +81,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ProfileMenu(
               text: "Log Out",
               icon: "assets/icon/CameraIcon.svg",
-              press: () {},
+              press: () {Auth().signOut();},
             ),
-            TextButton(
-              onPressed: () {
-                Auth().signOut();
-              },
-              child: Container(
-                  decoration:
-                      const BoxDecoration(color: Colors.white),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "Sign out",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                    ),
-                  )))
+            
           ],
         ),
       ),
