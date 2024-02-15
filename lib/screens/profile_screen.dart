@@ -5,6 +5,7 @@ import 'package:gdsc_solution/functions/auth.dart';
 import 'package:gdsc_solution/profile/components/profile_menu.dart';
 import 'package:gdsc_solution/profile/components/profile_pic.dart';
 import 'package:gdsc_solution/screens/login.dart';
+import 'package:gdsc_solution/functions/functions.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

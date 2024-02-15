@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gdsc_solution/functions/auth.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gdsc_solution/functions/functions.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePic extends StatefulWidget {
   const ProfilePic({super.key});
@@ -35,16 +37,31 @@ class _ProfilePicState extends State<ProfilePic> {
     }
   }
 
+  Future<void> _uploadNewPicture() async {
+  try {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      UploadImg uploadImg = UploadImg();
+      await uploadImg.uploadUserProfileImage(currentUser!.uid, image);
+
+      // Update the userData with new photo URL after successful upload
+      _loadUserData();
+    }
+  } catch (e) {
+    print('An error occurred: $e');  // This will print the error details to the console.
+  }
+}
+
+
   @override
   Widget build(BuildContext context) {
-
     ImageProvider imageProvider;
 
     if (userData != null && userData!['photo'] != null && (userData!['photo'] as String).isNotEmpty) {
-      // If there is a user photo URL and it's not empty, use NetworkImage
       imageProvider = NetworkImage(userData!['photo']);
     } else {
-      // If there is no user photo URL or it's empty, use the default AssetImage
       imageProvider = const AssetImage('assets/app/icon.png');
     }
 
@@ -56,8 +73,13 @@ class _ProfilePicState extends State<ProfilePic> {
         clipBehavior: Clip.none,
         children: [
           CircleAvatar(
-          backgroundImage: imageProvider,
-          backgroundColor: Colors.transparent,
+            backgroundImage: imageProvider,
+            backgroundColor: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                showEnlargedPhoto(context, userData?['photo']);
+              },
+            ),
           ),
           Positioned(
             right: -16,
@@ -74,7 +96,7 @@ class _ProfilePicState extends State<ProfilePic> {
                   ),
                   backgroundColor: const Color(0xFFF5F6F9),
                 ),
-                onPressed: () {},
+                onPressed: _uploadNewPicture,
                 child: SvgPicture.asset("assets/icon/CameraIcon.svg"),
               ),
             ),
