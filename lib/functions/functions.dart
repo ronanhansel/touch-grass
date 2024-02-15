@@ -24,4 +24,25 @@ class UploadImg {
   }
 }
 
+void showEnlargedPhoto(BuildContext context, String? imageUrl) {
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      content: imageUrl != null && imageUrl.isNotEmpty
+          ? Image.network(imageUrl, fit: BoxFit.cover)
+          : Image.asset('assets/app/icon.png'), // Default image
+      actions: <Widget>[
+        TextButton(
+          child: Text('Close'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    ),
+  );
+}
+
+
+
 // TODO: Implement get_user_info
