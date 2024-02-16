@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart'; 
 
 
 class UploadImg {
@@ -62,6 +63,7 @@ class UserInfoFetcher {
 class TaskUploader {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+//lack functions to delete the tasks added from the today tasks, will update later
   Future<void> uploadSavedTask({
     required String name, 
     required String detail, 
@@ -83,7 +85,9 @@ class TaskUploader {
       'photo': photo,
       'type': type,
       'xp': xp,
-      'expiration': expiration
+      'expiration': expiration,
+      'start_date': DateTime.now(),
+      'end_date': DateTime.now().add(Duration(days: expiration))
     };
 
     try {
@@ -99,6 +103,7 @@ class TaskUploader {
     }
   }
 
+//lack functions to delete the tasks added from the today tasks, will update later
   Future<void> uploadDismissedTask({
     required String name, 
     required String detail, 
@@ -120,7 +125,7 @@ class TaskUploader {
       'photo': photo,
       'type': type,
       'xp': xp,
-      'expiration': expiration
+      'expiration': expiration,
     };
 
     try {
