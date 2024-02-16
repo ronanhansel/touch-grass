@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gdsc_solution/functions/network.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:gdsc_solution/screens/tasks.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:gdsc_solution/functions/functions.dart';
 
 class Home extends StatefulWidget {
   final Function changeIndex;
@@ -119,6 +122,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       direction,
                     ) =>
                         _onSwipe(
+                            cardInfo,
                             previousIndex,
                             currentIndex,
                             direction,
@@ -436,6 +440,7 @@ double normaliser(current, max, min) {
 }
 
 bool _onSwipe(
+  List<dynamic> cardInfo,
   int previousIndex,
   int? currentIndex,
   CardSwiperDirection direction,
@@ -449,10 +454,43 @@ bool _onSwipe(
     debugPrint('Left function');
     changeToggle(false);
     //TODO: Implement dismissing tasks.
+    TaskUploader uploader = TaskUploader();
+
+    uploader.uploadDismissedTask(
+      name: cardInfo[previousIndex]['name'],
+      detail: cardInfo[previousIndex]['detail'],
+      photo: cardInfo[previousIndex]['photo'],
+      type: cardInfo[previousIndex]['type'],
+      xp: cardInfo[previousIndex]['xp'],
+      expiration: cardInfo[previousIndex]['expiration'] // Example value
+    ).then((_) {
+  // Handle successful upload
+      print('Upload successful');
+    }).catchError((error) {
+      // Handle errors here
+      print('Error: $error');
+    });
+    
   } else if (direction == CardSwiperDirection.right) {
     debugPrint('Right function');
     changeToggle(true);
     //TODO: Implement adding tasks.
+    TaskUploader uploader = TaskUploader();
+
+    uploader.uploadSavedTask(
+      name: cardInfo[previousIndex]['name'],
+      detail: cardInfo[previousIndex]['detail'],
+      photo: cardInfo[previousIndex]['photo'],
+      type: cardInfo[previousIndex]['type'],
+      xp: cardInfo[previousIndex]['xp'],
+      expiration: cardInfo[previousIndex]['expiration'] // Example value
+    ).then((_) {
+  // Handle successful upload
+      print('Upload successful');
+    }).catchError((error) {
+      // Handle errors here
+      print('Error: $error');
+    });
   } else if (direction == CardSwiperDirection.bottom) {
     debugPrint('Bottom function');
     Navigator.push(
