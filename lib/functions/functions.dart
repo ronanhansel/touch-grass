@@ -31,14 +31,6 @@ void showEnlargedPhoto(BuildContext context, String? imageUrl) {
       content: imageUrl != null && imageUrl.isNotEmpty
           ? Image.network(imageUrl, fit: BoxFit.cover)
           : Image.asset('assets/app/icon.png'), // Default image
-      actions: <Widget>[
-        TextButton(
-          child: Text('Close'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
     ),
   );
 }
@@ -46,3 +38,23 @@ void showEnlargedPhoto(BuildContext context, String? imageUrl) {
 
 
 // TODO: Implement get_user_info
+class UserInfoFetcher {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future<Map<String, dynamic>?> fetchUserInfo(String userId) async {
+    try {
+      DocumentSnapshot userDoc = await firestore.collection('users').doc(userId).get();
+      if (userDoc.exists) {
+        return userDoc.data() as Map<String, dynamic>?;
+      } else {
+        print('User not found');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching user info: $e');
+      // Consider handling the error more gracefully,like through user notifications
+      return null;
+    }
+  }
+}
+
