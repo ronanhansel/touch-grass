@@ -19,8 +19,8 @@ class _NavigationState extends State<Navigation> {
   void changeIndex(index) {
     setState(() {
       _selectedIndex = index;
+      debugPrint('Changed index $index');
     });
-    debugPrint('Changed index $index');
   }
 
   int _selectedIndex = 0;
@@ -30,7 +30,10 @@ class _NavigationState extends State<Navigation> {
   void initState() {
     super.initState();
     _widgetOptions = <Widget>[
-      Home(changeIndex, key: _homeKey,), // Pass the function directly
+      Home(
+        changeIndex,
+        key: _homeKey,
+      ), // Pass the function directly
       const Community(),
       const ProfileScreen(),
       const Tasks(),
@@ -40,9 +43,11 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 4310), () {
-      setState(() {
-        show = false;
-      });
+      mounted
+          ? setState(() {
+              show = false;
+            })
+          : debugPrint("not mounted");
     });
     return Stack(
       children: [
