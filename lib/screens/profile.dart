@@ -25,24 +25,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _loadUserData() async {
-  if (currentUser != null) {
-    try {
-      var userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser!.uid)
-          .get();
-      if (userDoc.exists) {
-        setState(() {
-          userData = userDoc.data();
-        });
+    if (currentUser != null) {
+      try {
+        var userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(currentUser!.uid)
+            .get();
+        if (userDoc.exists) {
+          setState(() {
+            userData = userDoc.data();
+          });
+        }
+      } catch (e) {
+        // Handle errors here, e.g., show a message to the user
+        print('Error loading user data: $e');
       }
-    } catch (e) {
-      // Handle errors here, e.g., show a message to the user
-      print('Error loading user data: $e');
     }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -87,17 +86,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
               press: () {},
             ),
             ProfileMenu(
-            text: "Log Out",
-            icon: "assets/icon/Log out.svg",
-            press: () async {
+              text: "Log Out",
+              icon: "assets/icon/Log out.svg",
+              press: () async {
                 try {
-                    await Auth().signOut();
-                    // Navigate to login or another appropriate screen
+                  await Auth().signOut().then((value) => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage())));
+                  // Navigate to login or another appropriate screen
                 } catch (error) {
-                    // Handle any errors here
-                    print('Logout error: $error');
+                  // Handle any errors here
+                  print('Logout error: $error');
                 }
-            },
+              },
             ),
           ],
         ),
@@ -105,8 +107,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-
-
-
-
