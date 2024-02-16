@@ -3,6 +3,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class UploadImg {
   final FirebaseStorage storage = FirebaseStorage.instance;
@@ -35,8 +37,6 @@ void showEnlargedPhoto(BuildContext context, String? imageUrl) {
   );
 }
 
-
-
 // TODO: Implement get_user_info
 class UserInfoFetcher {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -54,6 +54,85 @@ class UserInfoFetcher {
       print('Error fetching user info: $e');
       // Consider handling the error more gracefully,like through user notifications
       return null;
+    }
+  }
+}
+
+//Upload task after swipe right
+class TaskUploader {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future<void> uploadSavedTask({
+    required String name, 
+    required String detail, 
+    required String photo, 
+    required String type, 
+    required int xp,
+    required expiration
+  }) async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      throw Exception('No user logged in');
+    }
+
+    String userId = currentUser.uid;
+    Map<String, dynamic> taskData = {
+      'name': name,
+      'detail': detail,
+      'photo': photo,
+      'type': type,
+      'xp': xp,
+      'expiration': expiration
+    };
+
+    try {
+      await firestore
+          .collection('users')
+          .doc(userId)
+          .collection('saved tasks')
+          .add(taskData);
+      // Additional logic after successful upload can be added here
+    } catch (e) {
+      print('Error uploading task: $e');
+      // Consider handling the error more gracefully
+    }
+  }
+
+  Future<void> uploadDismissedTask({
+    required String name, 
+    required String detail, 
+    required String photo, 
+    required String type, 
+    required int xp,
+    required expiration
+  }) async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      throw Exception('No user logged in');
+    }
+
+    String userId = currentUser.uid;
+    Map<String, dynamic> taskData = {
+      'name': name,
+      'detail': detail,
+      'photo': photo,
+      'type': type,
+      'xp': xp,
+      'expiration': expiration
+    };
+
+    try {
+      await firestore
+          .collection('users')
+          .doc(userId)
+          .collection('dismissed tasks')
+          .add(taskData);
+      // Additional logic after successful upload can be added here
+    } catch (e) {
+      print('Error uploading task: $e');
+      // Consider handling the error more gracefully
     }
   }
 }
